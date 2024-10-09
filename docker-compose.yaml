@@ -1,0 +1,80 @@
+version: '3'
+
+services:
+  # Zookeeper
+  zookeeper:
+    container_name: zookeeper
+
+  # Kafka:
+  kafka_ui:
+    container_name: kafka_ui
+
+  kafka1:
+    container_name: kafka1
+
+  kafka2:
+    container_name: kafka2
+
+  kafka3:
+    container_name: kafka3
+
+  # Airflow
+  postgres:
+    container_name: postgres
+
+  airflow-webserver:
+    container_name: airflow-webserver
+
+  airflow-scheduler:
+    container_name: airflow-scheduler
+
+  airflow-init:
+    container_name: airflow-init
+
+  # HDFS
+  namenode:
+    container_name: namenode
+
+  datanode1:
+    container_name: datanode1
+
+  datanode2:
+    container_name: datanode2
+
+  datanode3:
+    container_name: datanode3
+
+  # YARN
+  resourcemanager:
+    container_name: resourcemanager
+
+  nodemanager1:
+    container_name: nodemanager1
+
+  nodemanager2:
+    container_name: nodemanager2
+
+  nodemanager3:
+    container_name: nodemanager3
+
+  # Trino
+  trino:
+    container_name: trino
+
+  metastore_db:
+    container_name: metastore_db
+
+  hive-metastore:
+    container_name: hive-metastore
+
+  superset:
+    container_name: superset
+
+  # Ranger
+  ranger:
+    container_name: ranger
+
+networks:
+  hadoop_ecosystem:
+
+volumes:
