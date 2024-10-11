@@ -1,0 +1,12 @@
+#Docker Compose For Ranger with Postgres Built in
+version: 2
+
+services:
+  ranger:
+    build: ranger
+    ports:
+      - 6182
+    extends:
+      service: base
+    env_file:
+      -  ./env

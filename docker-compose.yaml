@@ -2,7 +2,7 @@ version: '3'
 
 x-airflow-common:
   &airflow-common
-  image: apache/airflow:2.6.0
+  image: apache/airflow
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
@@ -17,7 +17,7 @@ x-airflow-common:
     - airflow_logs:/opt/airflow/logs
     - airflow_plugins:/opt/airflow/plugins
     - airflow_scripts:/opt/airflow/scripts
-    - ./spark:/opt/aitflow/spark
+    - ./spark:/opt/airflow/spark
   user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
   depends_on:
     postgres:
@@ -26,108 +26,6 @@ x-airflow-common:
     hadoop_ecosystem:
 
 services:
-  # Kafka
-  zoo1:
-    image: confluentinc/cp-zookeeper:7.3.2
-    container_name: zoo1
-    ports:
-      - "2181:2181"
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_SERVER_ID: 1
-      ZOOKEEPER_SERVERS: zoo1:2888:3888
-    networks:
-      hadoop_ecosystem:
-
-  kafka1:
-    image: confluentinc/cp-kafka:7.3.2
-    hostname: kafka1
-    container_name: kafka1
-    ports:
-      - "9092:9092"
-      - "29092:29092"
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:19092,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092,DOCKER://host.docker.internal:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
-      KAFKA_BROKER_ID: 1
-      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
-      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
-      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
-    depends_on:
-      - zoo1
-    networks:
-      hadoop_ecosystem:
-
-  kafka2:
-    image: confluentinc/cp-kafka:7.3.2
-    hostname: kafka2
-    container_name: kafka2
-    ports:
-      - "9093:9093"
-      - "29093:29093"
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:19093,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9093,DOCKER://host.docker.internal:29093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
-      KAFKA_BROKER_ID: 2
-      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
-      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
-      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
-    depends_on:
-      - zoo1
-    networks:
-      hadoop_ecosystem:
-
-  kafka3:
-    image: confluentinc/cp-kafka:7.3.2
-    hostname: kafka3
-    container_name: kafka3
-    ports:
-      - "9094:9094"
-      - "29094:29094"
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka3:19094,EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9094,DOCKER://host.docker.internal:29094
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
-      KAFKA_BROKER_ID: 3
-      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
-      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
-      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
-    depends_on:
-      - zoo1
-    networks:
-      hadoop_ecosystem:
-
-  kafka-ui:
-    image: provectuslabs/kafka-ui
-    container_name: kafka-ui
-    depends_on:
-      kafka1:
-        condition: service_healthy
-      kafka2:
-        condition: service_healthy
-      kafka3:
-        condition: service_healthy
-    environment:
-      KAFKA_CLUSTERS_0_NAME: kafka-cluster
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:9092, kafka2:9093, kafka3:9094
-      KAFKA_CLUSTERS_0_METRICS_PORT: 9090
-    healthcheck:
-      test: nc -z kafka-ui 8080 || exit -1
-      start_period: 15s
-      interval: 5s
-      timeout: 10s
-      retries: 10
-    mem_limit: 1G
-    ports:
-      - 8282:8080
-    networks:
-      hadoop_ecosystem:
-
   # Airflow
   postgres:
     image: postgres
@@ -144,7 +42,7 @@ services:
     networks:
       hadoop_ecosystem:
     volumes:
-      - postgres-db-volume:/var/lib/postgresql/data
+      - postgres_db_volume:/var/lib/postgresql/data
 
   airflow-webserver:
     <<: *airflow-common
@@ -189,7 +87,7 @@ services:
     environment:
       - CLUSTER_NAME=test
     env_file:
-      - ./hadoop.env
+      - ./hadoop/hadoop.env
     networks:
       hadoop_ecosystem:
 
@@ -202,7 +100,7 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
-      - ./hadoop.env
+      - ./hadoop/hadoop.env
     networks:
       hadoop_ecosystem:
 
@@ -215,7 +113,7 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
-      - ./hadoop.env
+      - ./hadoop/hadoop.env
     networks:
       hadoop_ecosystem:
 
@@ -228,7 +126,7 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
-      - ./hadoop.env
+      - ./hadoop/hadoop.env
     networks:
       hadoop_ecosystem:
 
@@ -240,7 +138,7 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
     env_file:
-      - ./hadoop.env
+      - ./hadoop/hadoop.env
     networks:
       hadoop_ecosystem:
 
@@ -251,7 +149,7 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     env_file:
-      - ./hadoop.env
+      - ./hadoop/hadoop.env
     networks:
       hadoop_ecosystem:
 
@@ -262,7 +160,7 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     env_file:
-      - ./hadoop.env
+      - ./hadoop/hadoop.env
     networks:
       hadoop_ecosystem:
 
@@ -273,7 +171,7 @@ services:
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     env_file:
-      - ./hadoop.env
+      - ./hadoop/hadoop.env
     networks:
       hadoop_ecosystem:
 
@@ -286,35 +184,94 @@ services:
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
-      - ./hadoop.env
+      - ./hadoop/hadoop.env
     networks:
       hadoop_ecosystem:
 
-  # Trino
+  # Data Warehouse
   trino:
+    image: trinodb/trino:457
     container_name: trino
+    ports:
+      - 8383:8080
+    networks:
+      hadoop_ecosystem:
+    volumes:
+      - ./trino/etc:/usr/lib/trino/etc:ro
+      - ./trino/catalog:/etc/trino/catalog
 
   metastore_db:
+    image: postgres
     container_name: metastore_db
+    environment:
+      POSTGRES_USER: hive
+      POSTGRES_PASSWORD: hive
+      POSTGRES_DB: metastore
+    networks:
+      hadoop_ecosystem:
+    volumes:
+      - metastore_db:/var/lib/postgresql/data
 
   hive-metastore:
+    image: starburstdata/hive:3.1.2-e.18
     container_name: hive-metastore
+    depends_on:
+      - metastore_db
+    env_file:
+      - ./hadoop/hadoop-hive.env
+    ports:
+      - 9083:9083 # Metastore Thrift
+    networks:
+      hadoop_ecosystem:
 
+  # Other
   superset:
+    image: superset
+    # build: ./superset
     container_name: superset
+    environment:
+      - SUPERSET_SECRET_KEY=secret
+    ports:
+      - 8088:8088
+    networks:
+      hadoop_ecosystem:
+    volumes:
+      - superset_data:/app/superset_home
 
-  # Ranger
   ranger:
+    image: ranger
+    # build: ./ranger/ranger
     container_name: ranger
+    ports:
+      - "6182:6182"
+      - "6083:6083"
+    depends_on:
+      - ranger_db
+    links:
+      - ranger_db
+    env_file:
+      - ./ranger/env
+    volumes:
+      - ./ranger/security/pki:/security
+      - ./ranger/pki/java/:/etc/pki/java/
+      - solr:/opt/solr/data
+
+  postgres:
+    image: ranger_db
+    # build: ./ranger/postgres
+    container_name: ranger_db
+    ports:
+      - 5432
+    env_file:
+      - ./ranger/env
+    volumes:
+      - ranger_db:/var/lib/pgsql/data/
 
 networks:
   hadoop_ecosystem:
 
 volumes:
-  zookeeper_secrets:
-  zookeeper_data:
-  zookeeper_log:
-  postgres-db-volume:
+  postgres_db_volume:
   airflow_logs:
   airflow_plugins:
   airflow_scripts:
@@ -323,3 +280,7 @@ volumes:
   hadoop_datanode2:
   hadoop_datanode3:
   hadoop_historyserver:
+  metastore_db:
+  superset_data:
+  solr:
+  ranger_db:
