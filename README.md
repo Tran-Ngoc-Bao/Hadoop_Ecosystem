@@ -2,7 +2,7 @@
 
 ## Introduction
 <ul>
-  <li>Name of project: Learn about Hadoop ecosystem components. Apply to real-world problems: Build a Data Lakehouse system to analyze e-commerce data on the Tiki platform</li>
+  <li>Name of project: Learn about Hadoop ecosystem components. Apply to real-world problems: Build a Data Lake system to analyze flight data on Kaggle</li>
   <li>Project objective:
     <ul>
       <li></li>
