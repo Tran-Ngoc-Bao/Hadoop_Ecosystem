@@ -3,6 +3,9 @@ version: '3'
 x-airflow-common:
   &airflow-common
   image: apache/airflow
+  depends_on:
+    postgres:
+      condition: service_healthy
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
@@ -12,18 +15,16 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- apache-airflow-providers-microsoft-mssql}
+  user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
+  networks:
+    hadoop_ecosystem:
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - airflow_logs:/opt/airflow/logs
     - airflow_plugins:/opt/airflow/plugins
     - airflow_scripts:/opt/airflow/scripts
     - ./spark:/opt/airflow/spark
-  user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
-  depends_on:
-    postgres:
-      condition: service_healthy
-  networks:
-    hadoop_ecosystem:
+    - ./airflow/source:/opt/airflow/source
 
 services:
   # Airflow
@@ -78,115 +79,115 @@ services:
   namenode:
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
     container_name: namenode
-    restart: always
-    ports:
-      - 9870:9870
-      - 9000:9000
-    volumes:
-      - hadoop_namenode:/hadoop/dfs/name
     environment:
       - CLUSTER_NAME=test
     env_file:
       - ./hadoop/hadoop.env
+    ports:
+      - 9870:9870
+      - 9000:9000
+    restart: always
     networks:
       hadoop_ecosystem:
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
 
   datanode1:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     container_name: datanode1
-    restart: always
-    volumes:
-      - hadoop_datanode1:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
       - ./hadoop/hadoop.env
+    restart: always
     networks:
       hadoop_ecosystem:
+    volumes:
+      - hadoop_datanode1:/hadoop/dfs/data
 
   datanode2:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     container_name: datanode2
-    restart: always
-    volumes:
-      - hadoop_datanode2:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
       - ./hadoop/hadoop.env
+    restart: always
     networks:
       hadoop_ecosystem:
+    volumes:
+      - hadoop_datanode2:/hadoop/dfs/data
 
   datanode3:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
     container_name: datanode3
-    restart: always
-    volumes:
-      - hadoop_datanode3:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
       - ./hadoop/hadoop.env
+    restart: always
     networks:
       hadoop_ecosystem:
+    volumes:
+      - hadoop_datanode3:/hadoop/dfs/data
 
   # YARN
   resourcemanager:
     image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
     container_name: resourcemanager
-    restart: always
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
     env_file:
       - ./hadoop/hadoop.env
+    restart: always
     networks:
       hadoop_ecosystem:
 
   nodemanager1:
     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
     container_name: nodemanager1
-    restart: always
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     env_file:
       - ./hadoop/hadoop.env
+    restart: always
     networks:
       hadoop_ecosystem:
 
   nodemanager2:
     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
     container_name: nodemanager2
-    restart: always
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     env_file:
       - ./hadoop/hadoop.env
+    restart: always
     networks:
       hadoop_ecosystem:
 
   nodemanager3:
     image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
     container_name: nodemanager3
-    restart: always
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     env_file:
       - ./hadoop/hadoop.env
+    restart: always
     networks:
       hadoop_ecosystem:
 
   historyserver:
     image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
     container_name: historyserver
-    restart: always
     environment:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
-    volumes:
-      - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
       - ./hadoop/hadoop.env
+    restart: always
     networks:
       hadoop_ecosystem:
+    volumes:
+      - hadoop_historyserver:/hadoop/yarn/timeline
 
   # Data Warehouse
   trino:
@@ -200,31 +201,28 @@ services:
       - ./trino/etc:/usr/lib/trino/etc:ro
       - ./trino/catalog:/etc/trino/catalog
 
-  metastore_db:
-    image: postgres
-    container_name: metastore_db
-    environment:
-      POSTGRES_USER: hive
-      POSTGRES_PASSWORD: hive
-      POSTGRES_DB: metastore
+  hive-metastore-postgresql:
+    image: bde2020/hive-metastore-postgresql:2.3.0
+    container_name: hive-metastore-postgresql
     networks:
       hadoop_ecosystem:
     volumes:
-      - metastore_db:/var/lib/postgresql/data
+      - hive_metastore_postgresql:/var/lib/postgresql/data
 
   hive-metastore:
-    image: starburstdata/hive:3.1.2-e.18
+    image: bde2020/hive:2.3.2-postgresql-metastore
     container_name: hive-metastore
-    depends_on:
-      - metastore_db
+    environment:
+      SERVICE_PRECONDITION: "hive-metastore-postgresql:5432"
     env_file:
       - ./hadoop/hadoop-hive.env
     ports:
-      - 9083:9083 # Metastore Thrift
+      - 9083:9083
+    command: /opt/hive/bin/hive --service metastore
     networks:
       hadoop_ecosystem:
 
-  # Other
+  # Superset
   superset:
     image: superset
     # build: ./superset
@@ -238,34 +236,53 @@ services:
     volumes:
       - superset_data:/app/superset_home
 
-  ranger:
-    image: ranger
-    # build: ./ranger/ranger
-    container_name: ranger
+  # Ranger
+  ranger-zk:
+    image: apache/ranger-zk:2.4.0
+    container_name: ranger-zk
     ports:
-      - "6182:6182"
-      - "6083:6083"
-    depends_on:
-      - ranger_db
-    links:
-      - ranger_db
-    env_file:
-      - ./ranger/env
+      - 2181:2181
+    networks:
+      hadoop_ecosystem:
     volumes:
-      - ./ranger/security/pki:/security
-      - ./ranger/pki/java/:/etc/pki/java/
-      - solr:/opt/solr/data
+      - ranger_zk_data:/data
+      - ranger_zk_datalog:/datalog
+      - ranger_zk_logs:/logs
+  
+  ranger-solr:
+    image: apache/ranger-solr:2.4.0
+    container_name: ranger-solr
+    ports:
+      - 8983:8983
+    command: solr-precreate ranger_audits /opt/solr/server/solr/configsets/ranger_audits/
+    networks:
+      hadoop_ecosystem:
+    volumes:
+      - ranger_solr:/var/solr
 
-  postgres:
-    image: ranger_db
-    # build: ./ranger/postgres
-    container_name: ranger_db
-    ports:
-      - 5432
-    env_file:
-      - ./ranger/env
+  ranger-db:
+    image: apache/ranger-db:2.4.0
+    container_name: ranger-db
+    healthcheck:
+      test: ["CMD", "su -c", "pg_isready -q", "postgres"]
+      interval: 10s
+      timeout: 2s
+      retries: 30
+    networks:
+      hadoop_ecosystem:
     volumes:
-      - ranger_db:/var/lib/pgsql/data/
+      - ranger_db:/var/lib/postgresql/data
+    
+  ranger:
+    image: apache/ranger:2.4.0
+    container_name: ranger
+    environment:
+      - RANGER_DB_TYPE:postgres
+    ports:
+      - 6080:6080
+    command: ./home/ranger/scripts/ranger.sh
+    networks:
+      hadoop_ecosystem:
 
 networks:
   hadoop_ecosystem:
@@ -280,7 +297,10 @@ volumes:
   hadoop_datanode2:
   hadoop_datanode3:
   hadoop_historyserver:
-  metastore_db:
+  hive_metastore_postgresql:
   superset_data:
-  solr:
+  ranger_zk_data:
+  ranger_zk_datalog:
+  ranger_zk_logs:
+  ranger_solr:
   ranger_db:
