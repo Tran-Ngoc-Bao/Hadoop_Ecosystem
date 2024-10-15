@@ -1,0 +1,11 @@
+I. Thu thập dữ liệu
+    Mô phỏng: Lập lịch lấy dữ liệu theo từng ngày trong các file theo tháng trong folder raw
+
+II. Lưu trữ dữ liệu
+
+
+III. Xử lý dữ liệu
+
+
+IV. Trực quan hóa dữ liệu
+

@@ -1,4 +1,4 @@
-# Data Lakehouse with Hadoop Ecosystem
+# Data Lake with Hadoop Ecosystem
 
 ## Introduction
 <ul>
@@ -31,16 +31,16 @@ docker exec -u root -it [airflow-webserver/airflow-scheduler] bash
 source /opt/airflow/source/build-env.sh
 ```
 
-#### 5. After start system, all port website of containers in <a href="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/port.txt">here</a>
+#### 4. After start system, all port website of containers in <a href="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/port.txt">here</a>
 
-#### 6. Start DAG in Airflow cluster
+#### 5. Start DAG in Airflow cluster
 
-#### 7. Build enviroment Superset
+#### 6. Build enviroment Superset
 ```sh
 ./superset/bootstrap-superset.sh
 ```
   
-#### 8. Visualize data in Superset with SQLalchemy uri
+#### 7. Visualize data in Superset with SQLalchemy uri
 ```sh
 trino://hive@trino:8080/hive
 ```
