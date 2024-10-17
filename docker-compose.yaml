@@ -139,6 +139,8 @@ services:
       SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
     env_file:
       - ./hadoop/hadoop.env
+    ports:
+      - 8888:8088
     restart: always
     networks:
       hadoop_ecosystem:
