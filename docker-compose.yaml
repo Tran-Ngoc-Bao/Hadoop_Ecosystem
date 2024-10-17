@@ -2,7 +2,8 @@ version: '3'
 
 x-airflow-common:
   &airflow-common
-  image: apache/airflow
+  image: airflow
+  # build: ./airflow
   depends_on:
     postgres:
       condition: service_healthy
@@ -238,54 +239,6 @@ services:
     volumes:
       - superset_data:/app/superset_home
 
-  # Ranger
-  ranger-zk:
-    image: apache/ranger-zk:2.4.0
-    container_name: ranger-zk
-    ports:
-      - 2181:2181
-    networks:
-      hadoop_ecosystem:
-    volumes:
-      - ranger_zk_data:/data
-      - ranger_zk_datalog:/datalog
-      - ranger_zk_logs:/logs
-  
-  ranger-solr:
-    image: apache/ranger-solr:2.4.0
-    container_name: ranger-solr
-    ports:
-      - 8983:8983
-    command: solr-precreate ranger_audits /opt/solr/server/solr/configsets/ranger_audits/
-    networks:
-      hadoop_ecosystem:
-    volumes:
-      - ranger_solr:/var/solr
-
-  ranger-db:
-    image: apache/ranger-db:2.4.0
-    container_name: ranger-db
-    healthcheck:
-      test: ["CMD", "su -c", "pg_isready -q", "postgres"]
-      interval: 10s
-      timeout: 2s
-      retries: 30
-    networks:
-      hadoop_ecosystem:
-    volumes:
-      - ranger_db:/var/lib/postgresql/data
-    
-  ranger:
-    image: apache/ranger:2.4.0
-    container_name: ranger
-    environment:
-      - RANGER_DB_TYPE:postgres
-    ports:
-      - 6080:6080
-    command: ./home/ranger/scripts/ranger.sh
-    networks:
-      hadoop_ecosystem:
-
 networks:
   hadoop_ecosystem:
 
@@ -301,8 +254,3 @@ volumes:
   hadoop_historyserver:
   hive_metastore_postgresql:
   superset_data:
-  ranger_zk_data:
-  ranger_zk_datalog:
-  ranger_zk_logs:
-  ranger_solr:
-  ranger_db:
