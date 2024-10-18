@@ -1,11 +1,5 @@
 airflow-webserver: 8080
-
 hdfs: 9870
-
+yarn: 8888
 trino: 8383
-
 superset: 8088
-
-solr: 8983
-
-ranger: 6080

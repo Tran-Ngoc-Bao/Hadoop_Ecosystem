@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36" version="24.7.17">
   <diagram name="Trang-1" id="7H73FpHsSYTPdwvyodjZ">
-    <mxGraphModel dx="1793" dy="2134" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="1941" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -78,24 +78,24 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="ZXG5lsxfy-wzflTqVX6p-7" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://www.southeastlinuxfest.org/wp-content/uploads/2016/04/postgresql-logo.png;" parent="1" vertex="1">
-          <mxGeometry x="1070" y="200" width="108.93" height="50" as="geometry" />
+          <mxGeometry x="1060" y="200" width="130.72" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="yOo7rIPb99MVcSWgUbsJ-2" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://www.southeastlinuxfest.org/wp-content/uploads/2016/04/postgresql-logo.png;" vertex="1" parent="1">
-          <mxGeometry x="230" y="200" width="108.94" height="50" as="geometry" />
+        <mxCell id="yOo7rIPb99MVcSWgUbsJ-2" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://www.southeastlinuxfest.org/wp-content/uploads/2016/04/postgresql-logo.png;" parent="1" vertex="1">
+          <mxGeometry x="220" y="200" width="130.73" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="yOo7rIPb99MVcSWgUbsJ-3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=3;" edge="1" parent="1">
+        <mxCell id="yOo7rIPb99MVcSWgUbsJ-3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=3;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="170" y="159.5" as="sourcePoint" />
             <mxPoint x="290" y="159.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="yOo7rIPb99MVcSWgUbsJ-4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=3;" edge="1" parent="1">
+        <mxCell id="yOo7rIPb99MVcSWgUbsJ-4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=3;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="520" y="159.5" as="sourcePoint" />
             <mxPoint x="640" y="159.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="yOo7rIPb99MVcSWgUbsJ-5" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://cdn.icon-icons.com/icons2/2699/PNG/512/kubernetes_logo_icon_168360.png;" vertex="1" parent="1">
+        <mxCell id="yOo7rIPb99MVcSWgUbsJ-5" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://cdn.icon-icons.com/icons2/2699/PNG/512/kubernetes_logo_icon_168360.png;" parent="1" vertex="1">
           <mxGeometry x="649.53" y="-190" width="360" height="180" as="geometry" />
         </mxCell>
       </root>

@@ -1,0 +1,19 @@
+I. Overview
+1. Kubernetes Components
+	Control Plane Components:
+		kube-apiserver: The core component server that exposes the Kubernetes HTTP API
+		etcd: Consistent and highly-available key value store for all API server data
+		kube-scheduler: Looks for Pods not yet bound to a node, and assigns each Pod to a suitable node
+		kube-controller-manager: Runs controllers to implement Kubernetes API behavior
+		cloud-controller-manager (optional): Integrates with underlying cloud provider(s)
+	Node Components:
+		kubelet: Ensures that Pods are running, including their containers.
+		kube-proxy (optional): Maintains network rules on nodes to implement Services.
+		Container runtime: Software responsible for running containers.
+2. Objects In Kubernetes
+	Object Names and IDs
+	Labels and Selectors
+	Namespaces
+	Annotations
+II. Containers
+Images, Container Environment, Runtime Class, Container Lifecycle Hooks
