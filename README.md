@@ -2,7 +2,7 @@
 
 ## Introduction
 <ul>
-  <li>Name of project: Learn about Hadoop ecosystem components. Apply to real-world problems: Build a Data Lake system to analyze flight data on Kaggle</li>
+  <li>Name of project: Building a Data Lake system to analyze flight data using Hadoop ecosystem components</li>
   <li>Project objective:
     <ul>
       <li>Explore Hadoop ecosystem components in big data processing storage with Data Lake architecture</li>
@@ -15,35 +15,42 @@
 ## Data flow
   <img src="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/pictures/system.png">
 
-## Deploy system
-#### 1. You should pull and build images in file docker-compose.yaml before
+## Deploy
 
-#### 2. Move to clone project and Start system
-  
-```sh
-docker compose up -d
+### 1. Installing Kubernetes (on Windows)
+
+```
+https://phoenixnap.com/kb/kubernetes-on-windows
 ```
 
-#### 3. Build enviroment on airflow-webserve and airflow-scheduler
+### 2. Create a 3 Node Kubernetes Cluster with Minikube
 
-```sh
-docker exec -u root -it [airflow-webserver/airflow-scheduler] bash 
-source /opt/airflow/source/build-env.sh
+#### 2.1. Create a 3 Node Cluster
+
+```
+minikube start --nodes 3 -p hadoop-ecosystem
 ```
 
-#### 4. After start system, all port website of containers in <a href="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/port.txt">here</a>
+#### 2.2. Label Nodes
 
-#### 5. Start DAG in Airflow cluster
+```
+kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker
+```
 
-#### 6. Build enviroment Superset
-```sh
-./superset/bootstrap-superset.sh
 ```
-  
-#### 7. Visualize data in Superset with SQLalchemy uri
-```sh
-trino://hive@trino:8080/hive
+kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker
 ```
+
+```
+kubectl label nodes hadoop-ecosystem-m02 role=worker
+```
+
+```
+kubectl label nodes hadoop-ecosystem-m03 role=worker
+```
+
+### 3. Deploy system
+
 
 ## Demo
 
