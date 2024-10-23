@@ -27,25 +27,25 @@ https://phoenixnap.com/kb/kubernetes-on-windows
 
 #### 2.1. Create a 3 Node Cluster
 
-```
+```sh
 minikube start --nodes 3 -p hadoop-ecosystem
 ```
 
 #### 2.2. Label Nodes
 
-```
+```sh
 kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker
 ```
 
-```
+```sh
 kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker
 ```
 
-```
+```sh
 kubectl label nodes hadoop-ecosystem-m02 role=worker
 ```
 
-```
+```sh
 kubectl label nodes hadoop-ecosystem-m03 role=worker
 ```
 
