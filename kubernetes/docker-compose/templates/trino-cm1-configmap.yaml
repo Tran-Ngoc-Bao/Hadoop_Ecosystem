@@ -1,0 +1,41 @@
+apiVersion: v1
+data:
+  delta.properties: |
+    connector.name=delta-lake
+    delta.enable-non-concurrent-writes=true
+    hive.s3.endpoint=http://minio:9000
+    hive.s3.path-style-access=true
+    hive.metastore.uri=thrift://hive-metastore:9083
+    hive.s3.aws-access-key=admin
+    hive.s3.aws-secret-key=password
+    hive.metastore-cache-ttl=0s
+    hive.metastore-refresh-interval=5s
+    hive.metastore-timeout=10s
+  hive.properties: |
+    connector.name=hive
+    hive.metastore.uri=thrift://hive-metastore:9083
+    fs.hadoop.enabled=true
+  iceberg.properties: |
+    connector.name=iceberg
+    iceberg.register-table-procedure.enabled=true
+    hive.metastore.uri=thrift://hive-metastore:9083
+    hive.s3.endpoint=http://minio:9000
+    hive.s3.path-style-access=true
+    hive.s3.aws-access-key=admin
+    hive.s3.aws-secret-key=password
+    hive.metastore-cache-ttl=0s
+    hive.metastore-refresh-interval=5s
+    hive.metastore-timeout=10s
+  memory.properties: |
+    connector.name=memory
+    memory.max-data-per-node=128MB
+  postgresql.properties: |
+    connector.name=postgresql
+    connection-url=jdbc:postgresql://postgres:5432/dbt-trino
+    connection-user=dbt-trino
+    connection-password=dbt-trino
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: trino
+  name: trino-cm1

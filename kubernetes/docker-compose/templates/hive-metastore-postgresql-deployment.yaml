@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -c
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: hive-metastore-postgresql
+  name: hive-metastore-postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: hive-metastore-postgresql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -c
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: hive-metastore-postgresql
+    spec:
+      containers:
+        - image: bde2020/hive-metastore-postgresql:2.3.0
+          name: hive-metastore-postgresql
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: hive-metastore-postgresql
+      restartPolicy: Always
+      volumes:
+        - name: hive-metastore-postgresql
+          persistentVolumeClaim:
+            claimName: hive-metastore-postgresql

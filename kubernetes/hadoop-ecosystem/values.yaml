@@ -1,0 +1,34 @@
+image:
+  dockerImageHost: "tranngocbao126"
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+postgres:
+  repository: "postgres"
+
+airflow:
+  repository: "airflow"
+
+namenode:
+  repository: "namenode"
+
+datanode:
+  repository: "datanode"
+
+resourcemanager:
+  repository: "resourcemanager"
+
+nodemanager:
+  repository: "nodemanager"
+
+trino:
+  repository: "trino"
+
+hive-database:
+  repository: "hive-database"
+
+hive:
+  repository: "hive"
+
+superset:
+  repository: "superset"
