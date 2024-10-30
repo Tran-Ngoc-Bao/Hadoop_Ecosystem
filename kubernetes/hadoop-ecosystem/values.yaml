@@ -1,34 +1,58 @@
-image:
-  dockerImageHost: "tranngocbao126"
+postgres:
+  repository: "postgres"
   tag: "latest"
   pullPolicy: IfNotPresent
 
-postgres:
-  repository: "postgres"
-
 airflow:
+  dockerImageHost: "tranngocbao126"
   repository: "airflow"
+  tag: "latest"
+  pullPolicy: IfNotPresent
 
 namenode:
-  repository: "namenode"
+  dockerImageHost: "bde2020"
+  repository: "hadoop-namenode"
+  tag: "2.0.0-hadoop3.2.1-java8"
+  pullPolicy: IfNotPresent
 
 datanode:
-  repository: "datanode"
+  dockerImageHost: "bde2020"
+  repository: "hadoop-datanode"
+  tag: "2.0.0-hadoop3.2.1-java8"
+  pullPolicy: IfNotPresent
 
 resourcemanager:
-  repository: "resourcemanager"
+  dockerImageHost: "bde2020"
+  repository: "hadoop-resourcemanager"
+  tag: "2.0.0-hadoop3.2.1-java8"
+  pullPolicy: IfNotPresent
 
 nodemanager:
-  repository: "nodemanager"
+  dockerImageHost: "bde2020"
+  repository: "hadoop-nodemanager"
+  tag: "2.0.0-hadoop3.2.1-java8"
+  pullPolicy: IfNotPresent
 
 trino:
+  dockerImageHost: "trinodb"
   repository: "trino"
+  tag: "457"
+  pullPolicy: IfNotPresent
 
 hive-database:
-  repository: "hive-database"
+  dockerImageHost: "bde2020"
+  repository: "hive-metastore-postgresql"
+  tag: "2.3.0"
+  pullPolicy: IfNotPresent
 
 hive:
+  dockerImageHost: "bde2020"
   repository: "hive"
+  tag: "2.3.2-postgresql-metastore"
+  pullPolicy: IfNotPresent
 
 superset:
+  dockerImageHost: "tranngocbao126"
   repository: "superset"
+  tag: "latest"
+  pullPolicy: IfNotPresent

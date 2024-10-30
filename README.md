@@ -16,18 +16,28 @@
   <img src="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/pictures/system.png">
 
 ## Deploy
-### 1. Installing Kubernetes (on Windows)
+### 1. Install Kubernetes
 ```
 https://phoenixnap.com/kb/kubernetes-on-windows
 ```
 
-### 2. Create a 3 Node Kubernetes Cluster with Minikube
-#### 2.1. Create a 3 Node Cluster
+### 2. Install Helm
+```
+https://phoenixnap.com/kb/install-helm
+```
+
+### 3. Install WSL
+```
+https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-desktop/
+```
+
+### 4. Create a 3 Node Kubernetes Cluster with Minikube
+#### 4.1. Create a 3 Node Cluster
 ```sh
 minikube start --nodes 3 -p hadoop-ecosystem
 ```
 
-#### 2.2. Label Nodes
+#### 4.2. Label Nodes
 ```sh
 kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker && kubectl label nodes hadoop-ecosystem-m02 role=worker
 ```
@@ -35,7 +45,7 @@ kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker &&
 kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker && kubectl label nodes hadoop-ecosystem-m03 role=worker
 ```
 
-### 3. Deploy system
+### 5. Deploy system
 
 ## Demo
 

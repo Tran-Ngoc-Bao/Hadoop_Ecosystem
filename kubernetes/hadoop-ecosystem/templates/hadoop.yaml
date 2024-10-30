@@ -1,0 +1,148 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: namenode
+  name: namenode
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: namenode
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: namenode
+    spec:
+      containers:
+        - name: namenode
+          image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+          envFrom:
+            - configMapRef:
+                name: hadoop-config
+          env:
+            - name: CLUSTER_NAME
+              value: hadoop
+          ports:
+            - containerPort: 9870
+              protocol: TCP
+            - containerPort: 9000
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /hadoop/dfs/name
+              name: hadoop-namenode
+      restartPolicy: Always
+      volumes:
+        - name: hadoop-namenode
+          persistentVolumeClaim:
+            claimName: hadoop-namenode
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: datanode1
+  name: datanode1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: datanode1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: datanode1
+    spec:
+      containers:
+        - name: datanode1
+          image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+          envFrom:
+            - configMapRef:
+                name: hadoop-config
+          env:
+            - name: SERVICE_PRECONDITION
+              value: "namenode-service:9870"
+          volumeMounts:
+            - mountPath: /hadoop/dfs/data
+              name: hadoop-datanode1
+      restartPolicy: Always
+      volumes:
+        - name: hadoop-datanode1
+          persistentVolumeClaim:
+            claimName: hadoop-datanode1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: datanode2
+  name: datanode2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: datanode2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: datanode2
+    spec:
+      containers:
+        - name: datanode2
+          image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+          envFrom:
+            - configMapRef:
+                name: hadoop-config
+          env:
+            - name: SERVICE_PRECONDITION
+              value: "namenode-service:9870"
+          volumeMounts:
+            - mountPath: /hadoop/dfs/data
+              name: hadoop-datanode2
+      restartPolicy: Always
+      volumes:
+        - name: hadoop-datanode2
+          persistentVolumeClaim:
+            claimName: hadoop-datanode2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: datanode3
+  name: datanode3
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: datanode3
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: datanode3
+    spec:
+      containers:
+        - name: datanode3
+          image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+          envFrom:
+            - configMapRef:
+                name: hadoop-config
+          env:
+            - name: SERVICE_PRECONDITION
+              value: "namenode-service:9870"
+          volumeMounts:
+            - mountPath: /hadoop/dfs/data
+              name: hadoop-datanode3
+      restartPolicy: Always
+      volumes:
+        - name: hadoop-datanode3
+          persistentVolumeClaim:
+            claimName: hadoop-datanode3
