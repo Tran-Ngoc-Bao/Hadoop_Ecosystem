@@ -34,15 +34,15 @@ https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-deskt
 ### 4. Create a 3 Node Kubernetes Cluster with Minikube
 #### 4.1. Create a 3 Node Cluster
 ```sh
-minikube start --nodes 3 -p hadoop-ecosystem
+minikube start --cpus 4 --memory 12288 --nodes 2 -p hadoop-ecosystem
 ```
 
 #### 4.2. Label Nodes
 ```sh
-kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker && kubectl label nodes hadoop-ecosystem-m02 role=worker
+kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker
 ```
 ```sh
-kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker && kubectl label nodes hadoop-ecosystem-m03 role=worker
+kubectl label nodes hadoop-ecosystem-m02 role=worker
 ```
 
 ### 5. Deploy system

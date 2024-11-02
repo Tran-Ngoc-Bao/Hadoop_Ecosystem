@@ -16,7 +16,7 @@ metadata:
   labels:
     app: hadoop
 data:
-  CORE_CONF_fs_defaultFS: hdfs://namenode-service:9000
+  CORE_CONF_fs_defaultFS: hdfs://namenode:9000
   CORE_CONF_hadoop_http_staticuser_user: root
   CORE_CONF_hadoop_proxyuser_hue_groups: '*'
   CORE_CONF_hadoop_proxyuser_hue_hosts: '*'
@@ -57,41 +57,109 @@ data:
   YARN_CONF_yarn_timeline___service_generic___application___history_enabled: "true"
   YARN_CONF_yarn_timeline___service_hostname: historyserver
 ---
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: hive-config
-#   labels:
-#     app: hive
-# data:
-#   HIVE_SITE_CONF_javax_jdo_option_ConnectionURL: "jdbc:postgresql://hive-metastore-postgresql/metastore"
-#   HIVE_SITE_CONF_javax_jdo_option_ConnectionDriverName: "org.postgresql.Driver"
-#   HIVE_SITE_CONF_javax_jdo_option_ConnectionUserName: "hive"
-#   HIVE_SITE_CONF_javax_jdo_option_ConnectionPassword: "hive"
-#   HIVE_SITE_CONF_datanucleus_autoCreateSchema: "false"
-#   HIVE_SITE_CONF_hive_metastore_uris: "thrift://hive-metastore:9083"
-#   HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check: "false"
-
-#   CORE_CONF_fs_defaultFS: "hdfs://namenode:9000"
-#   CORE_CONF_hadoop_http_staticuser_user: "root"
-#   CORE_CONF_hadoop_proxyuser_hue_hosts: "*"
-#   CORE_CONF_hadoop_proxyuser_hue_groups: "*"
-
-#   HDFS_CONF_dfs_webhdfs_enabled: "true"
-#   HDFS_CONF_dfs_permissions_enabled: "false"
-
-#   YARN_CONF_yarn_log___aggregation___enable: "true"
-#   YARN_CONF_yarn_resourcemanager_recovery_enabled: "true"
-#   YARN_CONF_yarn_resourcemanager_store_class: "org.apache.hadoop.yarn.server.resourcemanager.recovery.FileSystemRMStateStore"
-#   YARN_CONF_yarn_resourcemanager_fs_state___store_uri: "/rmstate"
-#   YARN_CONF_yarn_nodemanager_remote___app___log___dir: "/app-logs"
-#   YARN_CONF_yarn_log_server_url: "http://historyserver:8188/applicationhistory/logs/"
-#   YARN_CONF_yarn_timeline___service_enabled: "true"
-#   YARN_CONF_yarn_timeline___service_generic___application___history_enabled: "true"
-#   YARN_CONF_yarn_resourcemanager_system___metrics___publisher_enabled: "true"
-#   YARN_CONF_yarn_resourcemanager_hostname: "resourcemanager"
-#   YARN_CONF_yarn_timeline___service_hostname: "historyserver"
-#   YARN_CONF_yarn_resourcemanager_address: "resourcemanager:8032"
-#   YARN_CONF_yarn_resourcemanager_scheduler_address: "resourcemanager:8030"
-#   YARN_CONF_yarn_resourcemanager_resource__tracker_address: "resourcemanager:8031"
-  
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hive-config
+  labels:
+    app: hive
+data:
+  CORE_CONF_fs_defaultFS: hdfs://namenode:9000
+  CORE_CONF_hadoop_http_staticuser_user: root
+  CORE_CONF_hadoop_proxyuser_hue_groups: '*'
+  CORE_CONF_hadoop_proxyuser_hue_hosts: '*'
+  HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check: "false"
+  HDFS_CONF_dfs_permissions_enabled: "false"
+  HDFS_CONF_dfs_webhdfs_enabled: "true"
+  HIVE_SITE_CONF_datanucleus_autoCreateSchema: "false"
+  HIVE_SITE_CONF_hive_metastore_uris: thrift://hive-metastore:9083
+  HIVE_SITE_CONF_javax_jdo_option_ConnectionDriverName: org.postgresql.Driver
+  HIVE_SITE_CONF_javax_jdo_option_ConnectionPassword: hive
+  HIVE_SITE_CONF_javax_jdo_option_ConnectionURL: jdbc:postgresql://hive-metastore-postgresql/metastore
+  HIVE_SITE_CONF_javax_jdo_option_ConnectionUserName: hive
+  YARN_CONF_yarn_log___aggregation___enable: "true"
+  YARN_CONF_yarn_log_server_url: http://historyserver:8188/applicationhistory/logs/
+  YARN_CONF_yarn_nodemanager_remote___app___log___dir: /app-logs
+  YARN_CONF_yarn_resourcemanager_address: resourcemanager:8032
+  YARN_CONF_yarn_resourcemanager_fs_state___store_uri: /rmstate
+  YARN_CONF_yarn_resourcemanager_hostname: resourcemanager
+  YARN_CONF_yarn_resourcemanager_recovery_enabled: "true"
+  YARN_CONF_yarn_resourcemanager_resource__tracker_address: resourcemanager:8031
+  YARN_CONF_yarn_resourcemanager_scheduler_address: resourcemanager:8030
+  YARN_CONF_yarn_resourcemanager_store_class: org.apache.hadoop.yarn.server.resourcemanager.recovery.FileSystemRMStateStore
+  YARN_CONF_yarn_resourcemanager_system___metrics___publisher_enabled: "true"
+  YARN_CONF_yarn_timeline___service_enabled: "true"
+  YARN_CONF_yarn_timeline___service_generic___application___history_enabled: "true"
+  YARN_CONF_yarn_timeline___service_hostname: historyserver
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: trino
+  name: trino-cm0
+data:
+  config.properties: |
+    coordinator=true
+    node-scheduler.include-coordinator=true
+    http-server.http.port=8080
+    discovery.uri=http://localhost:8080
+  jvm.config: |
+    -server
+    -XX:InitialRAMPercentage=80
+    -XX:MaxRAMPercentage=80
+    -XX:G1HeapRegionSize=32M
+    -XX:+ExplicitGCInvokesConcurrent
+    -XX:+HeapDumpOnOutOfMemoryError
+    -XX:+ExitOnOutOfMemoryError
+    -XX:-OmitStackTraceInFastThrow
+    -XX:ReservedCodeCacheSize=256M
+    -XX:PerMethodRecompilationCutoff=10000
+    -XX:PerBytecodeRecompilationCutoff=10000
+    -Djdk.attach.allowAttachSelf=true
+    -Djdk.nio.maxCachedBufferSize=2000000
+  node.properties: |
+    node.environment=docker
+    node.data-dir=/data/trino
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: trino
+  name: trino-cm1
+data:
+  delta.properties: |
+    connector.name=delta-lake
+    delta.enable-non-concurrent-writes=true
+    hive.s3.endpoint=http://minio:9000
+    hive.s3.path-style-access=true
+    hive.metastore.uri=thrift://hive-metastore:9083
+    hive.s3.aws-access-key=admin
+    hive.s3.aws-secret-key=password
+    hive.metastore-cache-ttl=0s
+    hive.metastore-refresh-interval=5s
+    hive.metastore-timeout=10s
+  hive.properties: |
+    connector.name=hive
+    hive.metastore.uri=thrift://hive-metastore:9083
+    fs.hadoop.enabled=true
+  iceberg.properties: |
+    connector.name=iceberg
+    iceberg.register-table-procedure.enabled=true
+    hive.metastore.uri=thrift://hive-metastore:9083
+    hive.s3.endpoint=http://minio:9000
+    hive.s3.path-style-access=true
+    hive.s3.aws-access-key=admin
+    hive.s3.aws-secret-key=password
+    hive.metastore-cache-ttl=0s
+    hive.metastore-refresh-interval=5s
+    hive.metastore-timeout=10s
+  memory.properties: |
+    connector.name=memory
+    memory.max-data-per-node=128MB
+  postgresql.properties: |
+    connector.name=postgresql
+    connection-url=jdbc:postgresql://postgres:5432/dbt-trino
+    connection-user=dbt-trino
+    connection-password=dbt-trino

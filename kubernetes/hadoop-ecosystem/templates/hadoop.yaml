@@ -5,12 +5,10 @@ metadata:
     app: namenode
   name: namenode
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: namenode
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -46,12 +44,10 @@ metadata:
     app: datanode1
   name: datanode1
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: datanode1
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -63,9 +59,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: hadoop-config
-          env:
-            - name: SERVICE_PRECONDITION
-              value: "namenode-service:9870"
           volumeMounts:
             - mountPath: /hadoop/dfs/data
               name: hadoop-datanode1
@@ -82,12 +75,10 @@ metadata:
     app: datanode2
   name: datanode2
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: datanode2
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -99,9 +90,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: hadoop-config
-          env:
-            - name: SERVICE_PRECONDITION
-              value: "namenode-service:9870"
           volumeMounts:
             - mountPath: /hadoop/dfs/data
               name: hadoop-datanode2
@@ -118,12 +106,10 @@ metadata:
     app: datanode3
   name: datanode3
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: datanode3
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -135,9 +121,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: hadoop-config
-          env:
-            - name: SERVICE_PRECONDITION
-              value: "namenode-service:9870"
           volumeMounts:
             - mountPath: /hadoop/dfs/data
               name: hadoop-datanode3
@@ -146,3 +129,133 @@ spec:
         - name: hadoop-datanode3
           persistentVolumeClaim:
             claimName: hadoop-datanode3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: resourcemanager
+  name: resourcemanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resourcemanager
+  template:
+    metadata:
+      labels:
+        app: resourcemanager
+    spec:
+      containers:
+        - name: resourcemanager
+          image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+          envFrom:
+            - configMapRef:
+                name: hadoop-config
+          ports:
+            - containerPort: 8088
+              protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nodemanager1
+  name: nodemanager1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodemanager1
+  template:
+    metadata:
+      labels:
+        app: nodemanager1
+    spec:
+      containers:
+        - name: nodemanager1
+          image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+          envFrom:
+            - configMapRef:
+                name: hadoop-config
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nodemanager2
+  name: nodemanager2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodemanager2
+  template:
+    metadata:
+      labels:
+        app: nodemanager2
+    spec:
+      containers:
+        - name: nodemanager2
+          image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+          envFrom:
+            - configMapRef:
+                name: hadoop-config
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nodemanager3
+  name: nodemanager3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodemanager3
+  template:
+    metadata:
+      labels:
+        app: nodemanager3
+    spec:
+      containers:
+        - name: nodemanager3
+          image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+          envFrom:
+            - configMapRef:
+                name: hadoop-config
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: historyserver
+  name: historyserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: historyserver
+  template:
+    metadata:
+      labels:
+        app: historyserver
+    spec:
+      containers:
+        - name: historyserver
+          image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+          envFrom:
+            - configMapRef:
+                name: hadoop-config
+          volumeMounts:
+            - mountPath: /hadoop/yarn/timeline
+              name: hadoop-historyserver
+      restartPolicy: Always
+      volumes:
+        - name: hadoop-historyserver
+          persistentVolumeClaim:
+            claimName: hadoop-historyserver
