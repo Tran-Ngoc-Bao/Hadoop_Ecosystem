@@ -17,6 +17,7 @@ spec:
       containers:
         - name: hive-metastore
           image: bde2020/hive:2.3.2-postgresql-metastore
+          imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
                 name: hive-config
@@ -46,6 +47,7 @@ spec:
       containers:
         - name: hive-metastore-postgresql
           image: bde2020/hive-metastore-postgresql:2.3.0
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: hive-metastore-postgresql
@@ -74,6 +76,7 @@ spec:
       containers:
         - name: trino
           image: trinodb/trino:457
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -110,6 +113,7 @@ spec:
       containers:
         - name: superset
           image: tranngocbao126/superset
+          imagePullPolicy: IfNotPresent
           env:
             - name: SUPERSET_SECRET_KEY
               value: secret

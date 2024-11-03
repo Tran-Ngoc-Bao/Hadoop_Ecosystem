@@ -31,8 +31,8 @@ https://phoenixnap.com/kb/install-helm
 https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-desktop/
 ```
 
-### 4. Create a 3 Node Kubernetes Cluster with Minikube
-#### 4.1. Create a 3 Node Cluster
+### 4. Create a Kubernetes Cluster with Minikube
+#### 4.1. Create a Cluster
 ```sh
 minikube start --cpus 4 --memory 12288 --nodes 2 -p hadoop-ecosystem
 ```

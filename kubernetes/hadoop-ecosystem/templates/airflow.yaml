@@ -1,31 +1,211 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: postgres
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: postgres
-#   template:
-#     metadata:
-#       labels:
-#         app: postgres
-#     spec:
-#       containers:
-#         - name: postgres
-#           image: postgres
-#           imagePullPolicy: "IfNotPresent"
-#           ports:
-#             - containerPort: 5432
-#           envFrom:
-#             - configMapRef:
-#                 name: postgres-config
-#           volumeMounts:
-#             - mountPath: /var/lib/postgresql/data
-#               name: postgredb
-#       volumes:
-#         - name: postgredb
-#           persistentVolumeClaim:
-#             claimName: postgres-pv-claim
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          env:
+            - name: POSTGRES_DB
+              value: airflow
+            - name: POSTGRES_PASSWORD
+              value: airflow
+            - name: POSTGRES_USER
+              value: airflow
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-db-volume
+      restartPolicy: Always
+      volumes:
+        - name: postgres-db-volume
+          persistentVolumeClaim:
+            claimName: postgres-db-volume
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: airflow-init
+  name: airflow-init
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airflow-init
+  template:
+    metadata:
+      labels:
+        app: airflow-init
+    spec:
+      containers:
+        - name: airflow-init
+          image: tranngocbao126/airflow
+          args:
+              - version
+          envFrom:
+            - configMapRef:
+                name: airflow-config
+          env:
+            - name: _AIRFLOW_DB_UPGRADE
+              value: "true"
+            - name: _AIRFLOW_WWW_USER_CREATE
+              value: "true"
+            - name: _AIRFLOW_WWW_USER_PASSWORD
+              value: airflow
+            - name: _AIRFLOW_WWW_USER_USERNAME
+              value: airflow
+          volumeMounts:
+            - mountPath: /opt/airflow/logs
+              name: airflow-logs
+            - mountPath: /opt/airflow/plugins
+              name: airflow-plugins
+            - mountPath: /opt/airflow/scripts
+              name: airflow-scripts
+            - mountPath: /opt/airflow/dags
+              name: airflow-dags
+            - mountPath: /opt/airflow/source
+              name: airflow-source
+      restartPolicy: Always
+      volumes:
+        - name: airflow-logs
+          persistentVolumeClaim:
+            claimName: airflow-logs
+        - name: airflow-plugins
+          persistentVolumeClaim:
+            claimName: airflow-plugins
+        - name: airflow-scripts
+          persistentVolumeClaim:
+            claimName: airflow-scripts
+        - name: airflow-dags
+          hostPath:
+            path: /mnt/c/Users/trann/Documents/GitHub/Hadoop_Ecosystem/airflow/dags
+            type: Directory
+        - name: airflow-source
+          hostPath:
+            path: /mnt/c/Users/trann/Documents/GitHub/Hadoop_Ecosystem/airflow/source
+            type: Directory
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: airflow-webserver
+  name: airflow-webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airflow-webserver
+  template:
+    metadata:
+      labels:
+        app: airflow-webserver
+    spec:
+      containers:
+        - name: airflow-webserver
+          image: tranngocbao126/airflow
+          args:
+              - webserver
+          envFrom:
+            - configMapRef:
+                name: airflow-config
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/airflow/logs
+              name: airflow-logs
+            - mountPath: /opt/airflow/plugins
+              name: airflow-plugins
+            - mountPath: /opt/airflow/scripts
+              name: airflow-scripts
+            - mountPath: /opt/airflow/dags
+              name: airflow-dags
+            - mountPath: /opt/airflow/source
+              name: airflow-source
+      restartPolicy: Always
+      volumes:
+        - name: airflow-logs
+          persistentVolumeClaim:
+            claimName: airflow-logs
+        - name: airflow-plugins
+          persistentVolumeClaim:
+            claimName: airflow-plugins
+        - name: airflow-scripts
+          persistentVolumeClaim:
+            claimName: airflow-scripts
+        - name: airflow-dags
+          hostPath:
+            path: /mnt/c/Users/trann/Documents/GitHub/Hadoop_Ecosystem/airflow/dags
+            type: Directory
+        - name: airflow-source
+          hostPath:
+            path: /mnt/c/Users/trann/Documents/GitHub/Hadoop_Ecosystem/airflow/source
+            type: Directory
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: airflow-scheduler
+  name: airflow-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airflow-scheduler
+  template:
+    metadata:
+      labels:
+        app: airflow-scheduler
+    spec:
+      containers:
+        - name: airflow-scheduler
+          image: tranngocbao126/airflow
+          args:
+              - scheduler
+          envFrom:
+            - configMapRef:
+                name: airflow-config
+          volumeMounts:
+            - mountPath: /opt/airflow/logs
+              name: airflow-logs
+            - mountPath: /opt/airflow/plugins
+              name: airflow-plugins
+            - mountPath: /opt/airflow/scripts
+              name: airflow-scripts
+            - mountPath: /opt/airflow/dags
+              name: airflow-dags
+            - mountPath: /opt/airflow/source
+              name: airflow-source
+      restartPolicy: Always
+      volumes:
+        - name: airflow-logs
+          persistentVolumeClaim:
+            claimName: airflow-logs
+        - name: airflow-plugins
+          persistentVolumeClaim:
+            claimName: airflow-plugins
+        - name: airflow-scripts
+          persistentVolumeClaim:
+            claimName: airflow-scripts
+        - name: airflow-dags
+          hostPath:
+            path: /mnt/c/Users/trann/Documents/GitHub/Hadoop_Ecosystem/airflow/dags
+            type: Directory
+        - name: airflow-source
+          hostPath:
+            path: /mnt/c/Users/trann/Documents/GitHub/Hadoop_Ecosystem/airflow/source
+            type: Directory
