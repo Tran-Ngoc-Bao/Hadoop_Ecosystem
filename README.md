@@ -34,7 +34,7 @@ https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-deskt
 ### 4. Create a Kubernetes Cluster with Minikube
 #### 4.1. Create a Cluster
 ```sh
-minikube start --cpus 2 --memory 8192 --nodes 3 -p hadoop-ecosystem
+minikube start --cpus 4 --memory 8192 --nodes 3 -p hadoop-ecosystem
 ```
 
 #### 4.2. Label Nodes
@@ -46,6 +46,15 @@ kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker & 
 ```
 
 ### 5. Deploy system
+#### 5.1. Deploy Airflow
+```sh
+helm install airflow ./kubernetes/helm/airflow -n hadoop-ecosystem --create-namespace
+```
+
+#### 5.2. Deploy Hadoop
+```sh
+helm install hadoop ./kubernetes/helm/hadoop -n hadoop-ecosystem
+```
 
 ## Demo
 
