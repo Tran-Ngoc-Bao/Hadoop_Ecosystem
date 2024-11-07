@@ -56,6 +56,11 @@ helm install airflow ./kubernetes/helm/airflow -n hadoop-ecosystem --create-name
 helm install hadoop ./kubernetes/helm/hadoop -n hadoop-ecosystem
 ```
 
+#### 5.3. Deploy Hive
+```sh
+helm install hadoop ./kubernetes/helm/hive -n hadoop-ecosystem
+```
+
 ## Demo
 
 ## Report

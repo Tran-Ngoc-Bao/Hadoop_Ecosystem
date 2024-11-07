@@ -1,0 +1,17 @@
+{{- if .Values.securityGroupsForPods.enabled }}
+apiVersion: vpcresources.k8s.aws/v1beta1
+kind: SecurityGroupPolicy
+metadata:
+  name: {{ template "hiveMetastore.name" . }}-allow-rds-access
+  labels:
+    app.kubernetes.io/name: {{ template "hiveMetastore.name" . }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "hiveMetastore.name" . }}
+      helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+  securityGroups:
+    groupIds:
+      - {{ .Values.securityGroupsForPods.securityGroupId }}
+{{- end }}

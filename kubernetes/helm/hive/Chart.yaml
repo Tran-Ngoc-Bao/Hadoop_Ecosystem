@@ -1,0 +1,11 @@
+apiVersion: v2
+appVersion: 3.0.0
+dependencies:
+- condition: postgresql.enabled
+  name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.15.1
+description: A Helm chart for Hive Standalone Metastore
+name: hive-metastore
+type: application
+version: 0.1.2

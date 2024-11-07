@@ -1,0 +1,101 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ template "hiveMetastore.name" . }}
+  labels:
+    app.kubernetes.io/name: {{ template "hiveMetastore.name" . }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  metastore-site.xml.template: |-
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+    <configuration>
+        <property>
+            <name>fs.s3.impl</name>
+            <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+        </property>
+        <property>
+            <name>fs.s3.aws.credentials.provider</name>
+            <value>org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider,com.amazonaws.auth.EnvironmentVariableCredentialsProvider</value>
+        </property>
+        <property>
+            <name>fs.s3.connection.ssl.enabled</name>
+            <value>true</value>
+        </property>
+        <property>
+            <name>fs.s3.path.style.access</name>
+            <value>true</value>
+        </property>
+        <property>
+            <name>fs.s3.access.key</name>
+            <value>$AWS_ACCESS_KEY</value>
+        </property>
+        <property>
+            <name>fs.s3.secret.key</name>
+            <value>$AWS_SECRET_KEY</value>
+        </property>
+        <property>
+            <name>fs.s3a.aws.credentials.provider</name>
+            <value>org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider,com.amazonaws.auth.EnvironmentVariableCredentialsProvider</value>
+        </property>
+        <property>
+            <name>fs.s3a.connection.ssl.enabled</name>
+            <value>true</value>
+        </property>
+        <property>
+            <name>fs.s3a.path.style.access</name>
+            <value>true</value>
+        </property>
+        <property>
+            <name>fs.s3a.access.key</name>
+            <value>$AWS_ACCESS_KEY</value>
+        </property>
+        <property>
+            <name>fs.s3a.secret.key</name>
+            <value>$AWS_SECRET_KEY</value>
+        </property>
+        <property>
+            <name>hive.metastore.event.db.notification.api.auth</name>
+            <value>false</value>
+        </property>
+        <property>
+            <name>metastore.thrift.uris</name>
+            <value>thrift://localhost:9083</value>
+            <description>Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore.</description>
+        </property>
+        <property>
+            <name>metastore.task.threads.always</name>
+            <value>org.apache.hadoop.hive.metastore.events.EventCleanerTask</value>
+        </property>
+        <property>
+            <name>metastore.expression.proxy</name>
+            <value>org.apache.hadoop.hive.metastore.DefaultPartitionExpressionProxy</value>
+        </property>
+        <property>
+            <name>javax.jdo.option.ConnectionDriverName</name>
+            <value>org.postgresql.Driver</value>
+        </property>
+        <property>
+            <name>metastore.warehouse.dir</name>
+            <value>{{ .Values.warehouse.dir }}</value>
+        </property>
+        <property>
+            <name>javax.jdo.option.ConnectionURL</name>
+            <value>{{- if .Values.postgresql.enabled -}}
+                    jdbc:postgresql://{{ .Values.postgresql.host }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.database }}
+                {{- else -}}
+                    {{ .Values.remoteMetastore.connectionUrl }}
+                {{- end -}}</value>
+        </property>
+        <property>
+            <name>javax.jdo.option.ConnectionUserName</name>
+            <value>$REMOTE_METASTORE_USERNAME</value>
+        </property>
+        <property>
+            <name>javax.jdo.option.ConnectionPassword</name>
+            <value>$REMOTE_METASTORE_PASSWORD</value>
+        </property>
+    </configuration>

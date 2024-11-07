@@ -1,0 +1,103 @@
+{{- $nodeSelector := or .Values.initDatabaseJob.nodeSelector .Values.nodeSelector }}
+{{- $affinity := or .Values.initDatabaseJob.affinity .Values.affinity }}
+{{- $tolerations := or .Values.initDatabaseJob.tolerations .Values.tolerations }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-init-db
+  labels:
+    app.kubernetes.io/name: {{ template "hiveMetastore.name" . }}
+    app.kubernetes.io/component: init-database-job
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+  {{- $annotations := dict }}
+  {{- if .Values.initDatabaseJob.useHelmHooks }}
+    {{- $_ := set $annotations "helm.sh/hook" "post-install,post-upgrade" }}
+    {{- $_ := set $annotations "helm.sh/hook-weight" "1" }}
+    {{- $_ := set $annotations "helm.sh/hook-delete-policy" "before-hook-creation,hook-succeeded" }}
+  {{- end }}
+  {{- with $annotations := merge $annotations .Values.initDatabaseJob.jobAnnotations }}
+  annotations:
+    {{- $annotations | toYaml | nindent 4 }}
+  {{- end }}
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ template "hiveMetastore.name" . }}
+        app.kubernetes.io/component: init-database-job
+        helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+{{- with .Values.labels }}
+{{ toYaml . | indent 8 }}
+{{- end }}
+    spec:
+      restartPolicy: OnFailure
+      nodeSelector:  {{ toYaml $nodeSelector | indent 8 }}
+      affinity:
+{{ toYaml $affinity | indent 8 }}
+      tolerations:
+{{ toYaml $tolerations | indent 8 }}
+      serviceAccountName: {{ include "hiveMetastore.serviceAccountName" . }}
+      {{- if .Values.image.pullSecret }}
+      imagePullSecrets:
+        - name: {{ template "imagePullSecret" . }}
+      {{- end }}
+      initContainers:
+      - name: init-config
+        image: cirocosta/alpine-envsubst
+        command: ["sh", "-c", "cat /metastore-site.xml.template | envsubst > /conf/metastore-site.xml"]
+        env:
+          - name: REMOTE_METASTORE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.remoteMetastore.existingSecret }}
+                key: REMOTE_METASTORE_USERNAME
+          - name: REMOTE_METASTORE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.remoteMetastore.existingSecret }}
+                key: REMOTE_METASTORE_PASSWORD
+          - name: AWS_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.warehouse.existingSecret }}
+                key: AWS_ACCESS_KEY
+          - name: AWS_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.warehouse.existingSecret }}
+                key: AWS_SECRET_KEY
+        volumeMounts:
+          - name: config-templates
+            mountPath: /metastore-site.xml.template
+            subPath: metastore-site.xml.template
+          - name: config-dir
+            mountPath: /conf
+      containers:
+        - name: run-init-db
+          image: {{ template "hiveMetastoreImage" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.initDatabaseJob.initSchema }}
+          command: ["sh", "-c", "/opt/hive-metastore/bin/schematool -dbType postgres -initSchema --verbose"]
+          {{- else if not (.Values.initDatabaseJob.initSchema) }}
+          command: ["sh", "-c", "/opt/hive-metastore/bin/schematool -dbType postgres -upgradeSchema --verbose"]
+          {{- end }}
+          resources:
+{{ toYaml .Values.initDatabaseJob.resources | indent 12 }}
+          volumeMounts:
+            - name: config-dir
+              mountPath: /opt/hive-metastore/conf
+{{- if .Values.initDatabaseJob.extraVolumeMounts }}
+{{ toYaml .Values.initDatabaseJob.extraVolumeMounts | nindent 12 }}
+{{- end }}
+      volumes:
+        - name: config-templates
+          configMap:
+            name: {{ template "hiveMetastore.name" . }}
+        - name: config-dir
+          emptyDir: {}
+{{- if .Values.initDatabaseJob.extraVolumes }}
+{{ toYaml .Values.initDatabaseJob.extraVolumes | nindent 8 }}
+{{- end }}
