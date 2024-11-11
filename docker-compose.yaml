@@ -1,9 +1,9 @@
-version: '3'
+version: '3' 
 
 x-airflow-common:
   &airflow-common
-  # image: airflow
-  build: ./airflow
+  image: airflow
+  # build: ./airflow
   depends_on:
     postgres:
       condition: service_healthy
@@ -227,8 +227,8 @@ services:
 
   # Superset
   superset:
-    # image: superset
-    build: ./superset
+    image: superset
+    # build: ./superset
     container_name: superset
     environment:
       - SUPERSET_SECRET_KEY=secret

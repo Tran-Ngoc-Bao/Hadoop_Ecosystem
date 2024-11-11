@@ -1,0 +1,131 @@
+I. Phân phối lý do hủy (Cancellation Code Distribution):
+	Lý do B (Hãng vận chuyển): Lý hủy này phổ biến nhất, với số lượng 6131 chuyến bay. Các vấn đề liên quan đến hãng vận chuyển, chẳng hạn như vấn đề bảo trì hoặc xung đột lịch trình, có thể góp phần đáng kể vào việc hủy chuyến bay.
+
+	Lý do C (Thời tiết): Bộ dữ liệu chứa 1176 chuyến bay bị hủy do các vấn đề liên quan đến thời tiết. Các điều kiện thời tiết bất lợi, chẳng hạn như bão hoặc sương mù, có thể dẫn đến việc hủy chuyến bay để đảm bảo an toàn cho hành khách.
+
+	Lý do A (Kiểm soát không lưu): Có 1020 chuyến bay bị hủy do các vấn đề kiểm soát không lưu. Điều này có thể bao gồm tình trạng tắc nghẽn hoặc đóng cửa tại các sân bay, dẫn đến việc hủy hoặc hoãn chuyến bay.
+
+	Lý do D (An ninh): Chỉ có 1 chuyến bay trong bộ dữ liệu bị hủy vì lý do an ninh. Mặc dù không thường xuyên, nhưng các mối lo ngại liên quan đến an ninh như mối đe dọa khủng bố hoặc vi phạm có thể khiến các hãng hàng không hủy chuyến bay để giảm thiểu rủi ro cho hành khách và phi hành đoàn.
+
+
+
+II. Phân phối Mạng lưới Tiếp thị Hàng không (Marketing Airline Network Distribution)
+
+
+
+III. Phân bố Khoảng cách Chuyến bay (Distribution of Flight Distances):
+	Khoảng cách trung bình: Khoảng cách chuyến bay trung bình là khoảng 783,19 dặm, cho thấy hầu hết các chuyến bay trong tập dữ liệu đều bay một khoảng cách đáng kể.
+
+	Độ biến thiên: Độ lệch chuẩn 591,28 dặm cho thấy sự biến thiên đáng kể trong khoảng cách chuyến bay. Các chuyến bay có phạm vi từ hành trình chặng ngắn đến chặng dài.
+
+	Phạm vi: Khoảng cách chuyến bay thay đổi rất nhiều, với chuyến bay ngắn nhất bay 16 dặm và chuyến bay dài nhất bay 4983 dặm. Phạm vi này phản ánh sự đa dạng của các tuyến bay do các hãng hàng không khai thác.
+
+	Xu hướng trung tâm: Khoảng cách trung bình 622 dặm nằm gần tứ phân vị dưới (349 dặm) hơn tứ phân vị trên (1023 dặm), cho thấy một tỷ lệ đáng kể các chuyến bay đi những quãng đường ngắn hơn.
+
+	Hình dạng phân bố: Hình ảnh trực quan của khoảng cách chuyến bay có thể chỉ ra sự hiện diện của nhiều đỉnh hoặc cụm, cho thấy các loại hoặc loại chuyến bay khác nhau dựa trên khoảng cách.
+
+
+
+IV. Phân bố chuyến bay theo các ngày trong tuần (Distribution of Flights Across Days of the Week):
+	Ngày trong tuần so với cuối tuần: Phân bố chuyến bay cho thấy khối lượng cao hơn vào các ngày trong tuần (Thứ Hai đến Thứ Sáu) so với cuối tuần (Thứ Bảy và Chủ Nhật). Điều này cho thấy các ngày trong tuần bận rộn hơn đối với du lịch hàng không, có thể là do các chuyến bay liên quan đến công việc và đi lại.
+
+	Ngày cao điểm: Thứ Hai (Ngày trong tuần 1) và Thứ Ba (Ngày trong tuần 2) có số chuyến bay cao nhất, tiếp theo là Thứ Tư (Ngày trong tuần 3). Mẫu này phù hợp với lịch trình kinh doanh thông thường, khi nhiều cá nhân đi du lịch vào đầu tuần làm việc.
+
+	Du lịch cuối tuần: Các chuyến bay vào Thứ Bảy (Ngày trong tuần 6) và Chủ Nhật (Ngày trong tuần 7) thấp hơn đáng kể so với các ngày trong tuần. Điều này cho thấy hoạt động du lịch hàng không giảm vào cuối tuần, với ít chuyến bay liên quan đến công việc và đi lại hơn.
+
+	Tính biến động: Trong khi số lượng chuyến bay tương đối ổn định từ Thứ Hai đến Thứ Tư, thì có sự sụt giảm đáng kể về khối lượng chuyến bay vào cuối tuần, với Thứ Năm (Ngày trong Tuần 4) và Thứ Sáu (Ngày trong Tuần 5) có ít chuyến bay hơn. Điều này có thể phản ánh nhu cầu đi lại giảm vào cuối tuần làm việc hoặc lịch trình ưu tiên của các hãng hàng không.
+
+
+
+V. Phân phối thời gian khởi hành (Distribution of Departure Times):
+	Thời gian khởi hành trung bình: Thời gian khởi hành trung bình là khoảng 13:34 (1:34 chiều), cho thấy thời gian cao điểm từ giữa trưa đến đầu giờ chiều trong các chuyến bay khởi hành.
+
+	Độ biến thiên: Độ lệch chuẩn là 495,10 phút cho thấy sự biến thiên đáng kể trong thời gian khởi hành, cho thấy các chuyến bay được lên lịch trong suốt cả ngày và đêm.
+
+	Khởi hành sớm nhất: Thời gian khởi hành sớm nhất được ghi nhận là 00:01 (12:01 sáng), cho thấy các chuyến bay khởi hành ngay sau nửa đêm.
+
+	Thời gian khởi hành cao điểm: Thời gian khởi hành trung bình (phần trăm thứ 50) là 13:32 (1:32 chiều), cho thấy sự phân phối cân bằng của các chuyến bay trước và sau buổi trưa.
+
+	Phạm vi phân phối: Các chuyến bay khởi hành trong suốt cả ngày, với thời gian khởi hành được ghi nhận muộn nhất là 24:00 (12:00 sáng), cho thấy các chuyến bay khởi hành ngay trước nửa đêm.
+
+
+
+VI. Phân bố điểm xuất phát của chuyến bay (Distribution of Flight Origins):
+	Sân bay xuất phát bận rộn nhất: Phân bố điểm xuất phát của chuyến bay cho thấy Atlanta (ATL) là sân bay xuất phát bận rộn nhất, tiếp theo là Denver (DEN) và Chicago O'Hare (ORD). Những sân bay này có khả năng đóng vai trò là trung tâm chính cho các hãng hàng không, tạo điều kiện cho một lượng lớn các chuyến bay khởi hành từ những địa điểm này
+
+
+
+VII. Hủy chuyến bay theo ngày trong tuần (Flight Cancellations by Day of Week):
+	Biến động tỷ lệ hủy chuyến: Phân tích cho thấy tỷ lệ hủy chuyến khác nhau giữa các ngày khác nhau trong tuần.
+
+	Các ngày cao điểm giữa tuần: Thứ Hai, Thứ Ba và Thứ Tư (Ngày trong tuần 1, 2 và 3) có tỷ lệ hủy chuyến cao hơn so với các ngày khác. Điều này cho thấy khả năng các chuyến bay bị hủy cao hơn trong giai đoạn đầu đến giữa tuần.
+
+	Giảm vào cuối tuần: Tỷ lệ hủy chuyến giảm đáng kể vào cuối tuần, với Thứ Bảy và Chủ Nhật (Ngày trong tuần 6 và 7) cho thấy tỷ lệ hủy chuyến thấp nhất. Xu hướng này phù hợp với lưu lượng hàng không giảm và hoạt động có khả năng ổn định hơn vào cuối tuần.
+
+	Ngày cao điểm thứ Năm: Thứ Năm (Ngày trong tuần 4) nổi bật với tỷ lệ hủy chuyến tương đối cao so với các ngày lân cận. Điều này cho thấy thách thức tiềm ẩn về hoạt động hoặc sự gián đoạn gia tăng vào cuối tuần làm việc.
+
+
+
+VIII. Phân tích thời gian khởi hành theo lịch trình (Scheduled Departure Time Analysis):
+	Phân phối chung: Phân tích thời gian khởi hành theo lịch trình cho thấy một mô hình phân phối tương tự cho cả tất cả các chuyến bay và các chuyến bay bị hủy. Điều này cho thấy rằng sự phân phối thời gian khởi hành theo lịch trình không khác biệt đáng kể giữa tất cả các chuyến bay và các chuyến bay bị hủy.
+
+	Tỷ lệ hủy thấp: Trong tất cả các thời gian khởi hành theo lịch trình, tỷ lệ hủy vẫn tương đối thấp. Hầu hết các thời gian khởi hành theo lịch trình đều có tỷ lệ hủy dưới 0,1%, cho thấy phần lớn các chuyến bay không bị hủy bất kể thời gian khởi hành theo lịch trình của chúng.
+
+	Các lĩnh vực có thể quan tâm: Có một số thay đổi nhỏ trong tỷ lệ hủy đối với các thời gian khởi hành theo lịch trình cụ thể. Ví dụ, có một sự gia tăng nhẹ trong tỷ lệ hủy xung quanh thời gian khởi hành theo lịch trình là 652 và 1476. Điều này có thể chỉ ra những thách thức hoặc vấn đề tiềm ẩn về hoạt động trong các khung thời gian này dẫn đến khả năng hủy chuyến bay cao hơn.
+
+
+
+IX. Phân tích ngày trong tháng (Analysis of Day of Month):
+	Phân phối chung: Phân tích ngày trong tháng cho tất cả các chuyến bay cho thấy sự phân phối tương đối nhất quán, với những biến động nhỏ về tần suất các chuyến bay được quan sát thấy trong những ngày khác nhau. Tuy nhiên, không có sự tăng đột biến hoặc giảm đáng kể nào về tần suất các chuyến bay trong suốt tháng.
+
+	Mẫu hủy chuyến: Một số ngày trong tháng có tỷ lệ hủy chuyến cao hơn đáng kể so với những ngày khác. Ví dụ, ngày 4 và ngày 16 có tỷ lệ hủy chuyến bay bị hủy cao bất thường. Những sự tăng đột biến về tỷ lệ hủy chuyến này có thể chỉ ra các sự kiện cụ thể, thách thức về hoạt động hoặc các yếu tố bên ngoài ảnh hưởng đến hoạt động bay vào những ngày đó.
+
+	Xu hướng giữa tháng: Những ngày vào khoảng giữa tháng, chẳng hạn như ngày 12 và ngày 18, có xu hướng có tần suất chuyến bay cao hơn một chút so với những ngày khác. Tuy nhiên, tỷ lệ hủy chuyến vào những ngày này không chênh lệch đáng kể so với xu hướng chung, điều này cho thấy tần suất chuyến bay tăng không nhất thiết tương quan với tỷ lệ hủy chuyến cao hơn.
+
+	Sự ổn định vào cuối tháng: Về cuối tháng, tần suất chuyến bay và tỷ lệ hủy chuyến vẫn tương đối ổn định, không có sự chênh lệch đáng kể nào được quan sát thấy so với các ngày còn lại trong tháng. Điều này cho thấy hoạt động bay diễn ra ổn định vào cuối tháng, không có sự tăng hoặc giảm rõ rệt nào về hoạt động bay hoặc hủy chuyến.
+
+
+
+X. Phân tích thời gian lăn bánh trung bình (Analysis of Mean Taxi-Out Times):
+	Sự khác biệt về thời gian lăn bánh trung bình: Phân tích cho thấy sự khác biệt về thời gian lăn bánh trung bình giữa tất cả các chuyến bay và các chuyến bay bị hủy.
+
+	Thời gian lăn bánh tăng đối với các chuyến bay bị hủy: Trung bình, các chuyến bay bị hủy có thời gian lăn bánh dài hơn (21,61 phút) so với tất cả các chuyến bay (17,36 phút). Điều này cho thấy các chuyến bay cuối cùng bị hủy có xu hướng dành nhiều thời gian lăn bánh trên đường băng hơn trước khi cất cánh, có thể là do những thách thức về hoạt động, sự chậm trễ hoặc các yếu tố khác góp phần vào quyết định hủy chuyến bay.
+
+	Cân nhắc về hiệu quả hoạt động: Thời gian lăn bánh trung bình cao hơn đối với các chuyến bay bị hủy nhấn mạnh tầm quan trọng của việc theo dõi thời gian lăn bánh như một chỉ báo tiềm ẩn về tình trạng kém hiệu quả trong hoạt động hoặc nguy cơ gián đoạn chuyến bay sắp xảy ra. Việc xác định và giải quyết các vấn đề góp phần kéo dài thời gian lăn bánh có thể giúp giảm thiểu rủi ro hủy chuyến bay và cải thiện hiệu quả hoạt động chung.
+
+
+
+XI. Phân tích độ trễ trung bình theo hãng hàng không (Analysis of Mean Delay by Aircraft Carrier):
+	Độ trễ của hãng hàng không:
+		Trong số các hãng hàng không được phân tích, Độ trễ của hãng hàng không thay đổi đáng kể, với Độ trễ của hãng hàng không dao động từ khoảng 13,57 phút đối với VX (Virgin America) đến 27,41 phút đối với B6 (JetBlue Airways).
+		B6 (JetBlue Airways), DL (Delta Air Lines), HA (Hawaiian Airlines) và UA (United Airlines) có Độ trễ của hãng hàng không tương đối cao hơn so với các hãng hàng không khác, cho thấy những thách thức tiềm ẩn hoặc tình trạng kém hiệu quả cụ thể đối với các hãng hàng không này.
+
+	Độ trễ do thời tiết:
+		Độ trễ do thời tiết cho thấy sự khác biệt giữa các hãng hàng không, với DL (Delta Air Lines) có Độ trễ do thời tiết trung bình cao nhất là khoảng 10,42 phút, trong khi VX (Virgin America) có Độ trễ do thời tiết trung bình thấp nhất là khoảng 0,33 phút.
+		Sự gián đoạn liên quan đến thời tiết tác động đến hoạt động bay theo những cách khác nhau đối với từng hãng hàng không, với một số hãng hàng không gặp phải Độ trễ do thời tiết đáng kể hơn những hãng khác.
+
+	Độ trễ của NAS:
+		Độ trễ của NAS (Hệ thống không phận quốc gia) thay đổi đáng kể giữa các hãng hàng không, dao động từ khoảng 1,11 phút đối với HA (Hãng hàng không Hawaiian) đến 29,28 phút đối với NK (Hãng hàng không Spirit).
+		NK (Hãng hàng không Spirit) có Độ trễ của NAS cao hơn đáng kể so với các hãng hàng không khác, cho thấy khả năng tắc nghẽn không phận hoặc các vấn đề kiểm soát không lưu ảnh hưởng đến hoạt động của họ.
+
+	Độ trễ an ninh:
+		Độ trễ an ninh thường thấp ở tất cả các hãng hàng không, với hầu hết các hãng hàng không có Độ trễ an ninh dưới 0,5 phút.
+		HA (Hãng hàng không Hawaiian) và NK (Hãng hàng không Spirit) có Độ trễ an ninh trung bình cao hơn một chút so với các hãng hàng không khác, mặc dù tác động chung của Độ trễ an ninh đối với hoạt động bay vẫn ở mức tối thiểu.
+
+	Độ trễ máy bay đến muộn:
+		Độ trễ máy bay đến muộn thay đổi đáng kể giữa các hãng hàng không, dao động từ khoảng 10,52 phút đối với VX (Virgin America) đến 42,18 phút đối với F9 (Hãng hàng không Frontier).
+		F9 (Hãng hàng không Frontier) có Độ trễ máy bay đến muộn cao nhất, cho thấy các vấn đề tiềm ẩn liên quan đến việc quay vòng hoặc lên lịch máy bay góp phần gây ra sự chậm trễ của chuyến bay.
+
+
+
+XII. Phân tích Tổng số chuyến bay bị hủy và chuyến bay theo từng hãng hàng không (Analysis of Total Cancellations and Flights per Carrier):
+	Tổng số chuyến bay bị hủy theo từng hãng hàng không:
+		Delta Air Lines (DL) có tổng số chuyến bay bị hủy cao nhất, với 2.635 chuyến bay bị hủy trong giai đoạn quan sát. Điều này cho thấy sự gián đoạn đáng kể đối với hoạt động bay của Delta, có khả năng ảnh hưởng đến kế hoạch đi lại của hành khách và sự hài lòng chung của khách hàng.
+		United Airlines (UA) bám sát Delta, với 2.397 chuyến bay bị hủy. Số lượng chuyến bay bị hủy cao của UA cho thấy những thách thức hoặc vấn đề về hoạt động ảnh hưởng đến lịch trình chuyến bay của họ.
+		Các hãng hàng không khác như Southwest Airlines (WN) và JetBlue Airways (B6) cũng gặp phải một số lượng lớn chuyến bay bị hủy, với lần lượt 1.624 và 961 chuyến bay bị hủy. Những con số này làm nổi bật tác động của việc hủy chuyến đối với nhiều hãng hàng không khác nhau trong ngành hàng không.
+
+
+	Tổng số chuyến bay theo từng hãng hàng không:
+		Delta Air Lines (DL) khai thác số lượng chuyến bay cao nhất trong số các hãng hàng không được phân tích, với 87.473 chuyến bay được quan sát trong giai đoạn phân tích. Mặc dù phải trải qua một số lượng lớn các chuyến bay bị hủy, DL vẫn duy trì khối lượng chuyến bay đáng kể, cho thấy hoạt động trên quy mô lớn.
+		Southwest Airlines (WN) và United Airlines (UA) cũng khai thác một số lượng lớn các chuyến bay, với lần lượt là 71.823 và 76.697 chuyến bay. Các hãng hàng không này chứng minh hoạt động bay mạnh mẽ, phục vụ một lượng lớn hành khách trên toàn mạng lưới của họ.
+		Các hãng hàng không khác như Alaska Airlines (AS) và JetBlue Airways (B6) khai thác ít chuyến bay hơn so với các hãng hàng không truyền thống lớn nhưng vẫn đóng góp đáng kể vào toàn bộ ngành du lịch hàng không, phục vụ cho các thị trường và khu vực cụ thể.
