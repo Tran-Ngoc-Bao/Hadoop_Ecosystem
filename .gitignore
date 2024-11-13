@@ -1,1 +1,3 @@
-airflow/source/flight_data/
+docker-compose/airflow/source/flight_data/
+hadoop/
+spark/
