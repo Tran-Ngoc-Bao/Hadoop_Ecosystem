@@ -39,36 +39,41 @@ minikube start --cpus 4 --memory 8192 --nodes 3 -p hadoop-ecosystem
 
 #### 4.2. Label Nodes
 ```sh
-kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker; kubectl label nodes hadoop-ecosystem-m02 role=worker
+kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker & kubectl label nodes hadoop-ecosystem-m02 role=worker
 ```
 ```sh
-kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker; kubectl label nodes hadoop-ecosystem-m03 role=worker
+kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker & kubectl label nodes hadoop-ecosystem-m03 role=worker
 ```
 
 ### 5. Deploy system
+#### 5.0. Create Namespace
+```sh
+kubectl create namespace hadoop-ecosystem & kubectl config set-context --current --namespace=hadoop-ecosystem
+```
+
 #### 5.1. Deploy Airflow
 ```sh
-helm install airflow ./kubernetes/helm/airflow -n hadoop-ecosystem --create-namespace
+helm install airflow ./kubernetes/helm/airflow
 ```
 
 #### 5.2. Deploy Hadoop
 ```sh
-helm install hadoop ./kubernetes/helm/hadoop -n hadoop-ecosystem
+helm install hadoop ./kubernetes/helm/hadoop
 ```
 
 #### 5.3. Deploy Hive
 ```sh
-helm install hive-metastore ./kubernetes/helm/hive-metastore -n hadoop-ecosystem
+helm install hive-metastore ./kubernetes/helm/hive-metastore
 ```
 
 #### 5.4. Deploy Trino
 ```sh
-helm install trino ./kubernetes/helm/trino -n hadoop-ecosystem
+helm install trino ./kubernetes/helm/trino
 ```
 
 #### 5.5. Deploy Superset
 ```sh
-helm install superset ./kubernetes/helm/superset -n hadoop-ecosystem
+helm install superset ./kubernetes/helm/superset
 ```
 
 ## Demo
