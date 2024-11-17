@@ -83,7 +83,7 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: tranngocbao126/airflow
-  tag: "2.0"
+  tag: "3.0"
   digest: ""
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -220,7 +220,7 @@ defaultInitContainers:
       runAsUser: 1001
       runAsGroup: 1001
       runAsNonRoot: true
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
       privileged: false
       allowPrivilegeEscalation: false
       capabilities:
@@ -281,7 +281,7 @@ defaultInitContainers:
       runAsUser: 1001
       runAsGroup: 1001
       runAsNonRoot: true
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
       privileged: false
       allowPrivilegeEscalation: false
       capabilities:
@@ -347,7 +347,7 @@ defaultSidecars:
       runAsUser: 1001
       runAsGroup: 1001
       runAsNonRoot: true
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false
       privileged: false
       allowPrivilegeEscalation: false
       capabilities:
@@ -552,7 +552,7 @@ web:
     runAsNonRoot: true
     privileged: false
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     capabilities:
       drop: ["ALL"]
     seccompProfile:
@@ -892,7 +892,7 @@ scheduler:
     runAsNonRoot: true
     privileged: false
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     capabilities:
       drop: ["ALL"]
     seccompProfile:
@@ -1233,7 +1233,7 @@ dagProcessor:
     runAsNonRoot: true
     privileged: false
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     capabilities:
       drop: ["ALL"]
     seccompProfile:
@@ -1581,7 +1581,7 @@ triggerer:
     runAsNonRoot: true
     privileged: false
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     capabilities:
       drop: ["ALL"]
     seccompProfile:
@@ -2031,7 +2031,7 @@ worker:
     runAsNonRoot: true
     privileged: false
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     capabilities:
       drop: ["ALL"]
     seccompProfile:
@@ -2598,7 +2598,7 @@ metrics:
     runAsNonRoot: true
     privileged: false
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     capabilities:
       drop: ["ALL"]
     seccompProfile:
