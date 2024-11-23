@@ -1,6 +1,0 @@
-airflow-webserver: 8080
-hdfs: 9870
-resourcemanager: 8888
-historyserver: 8188
-trino: 8383
-superset: 8088

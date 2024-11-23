@@ -53,27 +53,27 @@ kubectl create namespace hadoop-ecosystem & kubectl config set-context --current
 
 #### 5.1. Deploy Airflow
 ```sh
-helm install airflow ./kubernetes/helm/airflow
+helm install airflow ./kubernetes/airflow
 ```
 
 #### 5.2. Deploy Hadoop
 ```sh
-helm install hadoop ./kubernetes/helm/hadoop
+helm install hadoop ./kubernetes/hadoop
 ```
 
 #### 5.3. Deploy Hive
 ```sh
-helm install hive-metastore ./kubernetes/helm/hive-metastore
+helm install hive-metastore ./kubernetes/hive-metastore
 ```
 
 #### 5.4. Deploy Trino
 ```sh
-helm install trino ./kubernetes/helm/trino
+helm install trino ./kubernetes/trino
 ```
 
 #### 5.5. Deploy Superset
 ```sh
-helm install superset ./kubernetes/helm/superset
+helm install superset ./kubernetes/superset
 ```
 
 ### 6. Use System
