@@ -1,3 +1,5 @@
-docker-compose/airflow/source/flight_data/
-builded-airflow/hadoop/
-builded-airflow/spark/
+builded-airflow/spark/*
+builded-airflow/hadoop/*
+
+!builded-airflow/spark/conf
+!builded-airflow/hadoop/etc
