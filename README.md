@@ -16,22 +16,22 @@
   <img src="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/pictures/system.png">
 
 ## Deploy
-### 1 Install Kubernetes
+### 1. Install Kubernetes
 ```
 https://phoenixnap.com/kb/kubernetes-on-windows
 ```
 
-### 2 Install Helm
+### 2. Install Helm
 ```
 https://phoenixnap.com/kb/install-helm
 ```
 
-### 3 Install WSL
+### 3. Install WSL
 ```
 https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-desktop/
 ```
 
-### 4 Create a Kubernetes Cluster with Minikube
+### 4. Create a Kubernetes Cluster with Minikube
 #### 4.1 Create a Cluster
 ```sh
 minikube start --cpus 4 --memory 8192 --nodes 3 -p hadoop-ecosystem
@@ -45,7 +45,7 @@ kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker & 
 kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker & kubectl label nodes hadoop-ecosystem-m03 role=worker
 ```
 
-### 5 Deploy system
+### 5. Deploy system
 #### 5.0 Create Namespace
 ```sh
 kubectl create namespace hadoop-ecosystem & kubectl config set-context --current --namespace=hadoop-ecosystem
@@ -76,7 +76,7 @@ helm install trino ./kubernetes/trino
 helm install superset ./kubernetes/superset
 ```
 
-### 6 Use System
+### 6. Use System
 #### 6.1 Download Data source
 ```
 https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022/data?select=readme.md
