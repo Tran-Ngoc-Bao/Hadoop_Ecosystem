@@ -1,85 +1,66 @@
-# Data Lake with Hadoop Ecosystem
+# IT3943 - Project 3 - SOICT - HUST
 
 ## Introduction
 <ul>
-  <li>Name of project: Building a Data Lake system to analyze flight data using Hadoop ecosystem components</li>
+  <li>Name of project: Build a Data Lake system to analyze flight data on Kaggle</li>
   <li>Project objective:
     <ul>
-      <li>Explore Hadoop ecosystem components in big data processing storage with Data Lake architecture</li>
-      <li>Mastering Hadoop system administration for Flight data analysis</li>
-      <li>Monitor performance, fault tolerance, load balancing, and information security issues</li>
-    </ul>
+      <li>Process flight data on Kaggle with Data Lake system</li>
+      <li>Use Spark SQL and Spark ML to analyze data</li>
+      <li>Use Trino to query data and Superset to visualize data</li>
+    </ul>  
   </li>
 </ul>
 
 ## Data flow
-  <img src="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/pictures/system.png">
+  <img src="https://github.com/Tran-Ngoc-Bao/Process_Flight_Data/blob/master/pictures/system.png">
 
-## Deploy
-### 1. Install Kubernetes
-```
-https://phoenixnap.com/kb/kubernetes-on-windows
-```
-
-### 2. Install Helm
-```
-https://phoenixnap.com/kb/install-helm
-```
-
-### 3. Install WSL
-```
-https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-desktop/
-```
-
-### 4. Create a Kubernetes Cluster with Minikube
-#### 4.1 Create a Cluster
+## Deploy system
+#### 1. Should pull and build images before
 ```sh
-minikube start --cpus 4 --memory 8192 --nodes 3 -p hadoop-ecosystem
-```
-
-#### 4.2 Label Nodes
-```sh
-kubectl label node hadoop-ecosystem-m02 node-role.kubernetes.io/worker=worker & kubectl label nodes hadoop-ecosystem-m02 role=worker
+docker pull postgres bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8 bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8 bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8 bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8 bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
 ```
 ```sh
-kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker & kubectl label nodes hadoop-ecosystem-m03 role=worker
+docker build ./airflow -t airflow
 ```
-
-### 5. Deploy system
-#### 5.0 Create Namespace
 ```sh
-kubectl create namespace hadoop-ecosystem & kubectl config set-context --current --namespace=hadoop-ecosystem
+docker build ./superset -t superset
 ```
 
-#### 5.1 Deploy Airflow
+#### 2. Start system
 ```sh
-helm install airflow ./kubernetes/airflow
+docker compose up -d
 ```
 
-#### 5.2 Deploy Hadoop
+#### 3. Set Trino on Airflow cluster
 ```sh
-helm install hadoop ./kubernetes/hadoop
+docker exec -u root -it airflow-webserver chmod +x /opt/airflow/source/trino; docker exec -u root -it airflow-scheduler chmod +x /opt/airflow/source/trino
 ```
 
-#### 5.3 Deploy Hive
-```sh
-helm install hive-metastore ./kubernetes/hive-metastore
+#### 4. Set Spark and Hadoop on Airflow cluster
+```
+Download Spark & Hadoop packages and Replace config in airflow/source
+```
+```
+https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz
+```
+```
+https://spark.apache.org/downloads.html
 ```
 
-#### 5.4 Deploy Trino
-```sh
-helm install trino ./kubernetes/trino
-```
-
-#### 5.5 Deploy Superset
-```sh
-helm install superset ./kubernetes/superset
-```
-
-### 6. Use System
-#### 6.1 Download Data source
+#### 5. Download Data source to Airflow cluster
 ```
 https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022/data?select=readme.md
+```
+
+#### 6. Build enviroment Superset
+```sh
+./superset/bootstrap-superset.sh
+```
+  
+#### 7. Visualize data on Superset with SQLalchemy uri
+```
+trino://hive@trino:8080/hive
 ```
 
 ## Demo
