@@ -1,3 +1,4 @@
+data_source/*
 builded-airflow/spark/*
 builded-airflow/hadoop/*
 

@@ -66,16 +66,7 @@ VII. Hủy chuyến bay theo ngày trong tuần (Flight Cancellations by Day of 
 
 
 
-VIII. Phân tích thời gian khởi hành theo lịch trình (Scheduled Departure Time Analysis):
-	Phân phối chung: Phân tích thời gian khởi hành theo lịch trình cho thấy một mô hình phân phối tương tự cho cả tất cả các chuyến bay và các chuyến bay bị hủy. Điều này cho thấy rằng sự phân phối thời gian khởi hành theo lịch trình không khác biệt đáng kể giữa tất cả các chuyến bay và các chuyến bay bị hủy.
-
-	Tỷ lệ hủy thấp: Trong tất cả các thời gian khởi hành theo lịch trình, tỷ lệ hủy vẫn tương đối thấp. Hầu hết các thời gian khởi hành theo lịch trình đều có tỷ lệ hủy dưới 0,1%, cho thấy phần lớn các chuyến bay không bị hủy bất kể thời gian khởi hành theo lịch trình của chúng.
-
-	Các lĩnh vực có thể quan tâm: Có một số thay đổi nhỏ trong tỷ lệ hủy đối với các thời gian khởi hành theo lịch trình cụ thể. Ví dụ, có một sự gia tăng nhẹ trong tỷ lệ hủy xung quanh thời gian khởi hành theo lịch trình là 652 và 1476. Điều này có thể chỉ ra những thách thức hoặc vấn đề tiềm ẩn về hoạt động trong các khung thời gian này dẫn đến khả năng hủy chuyến bay cao hơn.
-
-
-
-IX. Phân tích ngày trong tháng (Analysis of Day of Month):
+VIII. Phân tích ngày trong tháng (Analysis of Day of Month):
 	Phân phối chung: Phân tích ngày trong tháng cho tất cả các chuyến bay cho thấy sự phân phối tương đối nhất quán, với những biến động nhỏ về tần suất các chuyến bay được quan sát thấy trong những ngày khác nhau. Tuy nhiên, không có sự tăng đột biến hoặc giảm đáng kể nào về tần suất các chuyến bay trong suốt tháng.
 
 	Mẫu hủy chuyến: Một số ngày trong tháng có tỷ lệ hủy chuyến cao hơn đáng kể so với những ngày khác. Ví dụ, ngày 4 và ngày 16 có tỷ lệ hủy chuyến bay bị hủy cao bất thường. Những sự tăng đột biến về tỷ lệ hủy chuyến này có thể chỉ ra các sự kiện cụ thể, thách thức về hoạt động hoặc các yếu tố bên ngoài ảnh hưởng đến hoạt động bay vào những ngày đó.
@@ -86,16 +77,7 @@ IX. Phân tích ngày trong tháng (Analysis of Day of Month):
 
 
 
-X. Phân tích thời gian lăn bánh trung bình (Analysis of Mean Taxi-Out Times):
-	Sự khác biệt về thời gian lăn bánh trung bình: Phân tích cho thấy sự khác biệt về thời gian lăn bánh trung bình giữa tất cả các chuyến bay và các chuyến bay bị hủy.
-
-	Thời gian lăn bánh tăng đối với các chuyến bay bị hủy: Trung bình, các chuyến bay bị hủy có thời gian lăn bánh dài hơn (21,61 phút) so với tất cả các chuyến bay (17,36 phút). Điều này cho thấy các chuyến bay cuối cùng bị hủy có xu hướng dành nhiều thời gian lăn bánh trên đường băng hơn trước khi cất cánh, có thể là do những thách thức về hoạt động, sự chậm trễ hoặc các yếu tố khác góp phần vào quyết định hủy chuyến bay.
-
-	Cân nhắc về hiệu quả hoạt động: Thời gian lăn bánh trung bình cao hơn đối với các chuyến bay bị hủy nhấn mạnh tầm quan trọng của việc theo dõi thời gian lăn bánh như một chỉ báo tiềm ẩn về tình trạng kém hiệu quả trong hoạt động hoặc nguy cơ gián đoạn chuyến bay sắp xảy ra. Việc xác định và giải quyết các vấn đề góp phần kéo dài thời gian lăn bánh có thể giúp giảm thiểu rủi ro hủy chuyến bay và cải thiện hiệu quả hoạt động chung.
-
-
-
-XI. Phân tích độ trễ trung bình theo hãng hàng không (Analysis of Mean Delay by Aircraft Carrier):
+IX. Phân tích độ trễ trung bình theo hãng hàng không (Analysis of Mean Delay by Aircraft Carrier):
 	Độ trễ của hãng hàng không:
 		Trong số các hãng hàng không được phân tích, Độ trễ của hãng hàng không thay đổi đáng kể, với Độ trễ của hãng hàng không dao động từ khoảng 13,57 phút đối với VX (Virgin America) đến 27,41 phút đối với B6 (JetBlue Airways).
 		B6 (JetBlue Airways), DL (Delta Air Lines), HA (Hawaiian Airlines) và UA (United Airlines) có Độ trễ của hãng hàng không tương đối cao hơn so với các hãng hàng không khác, cho thấy những thách thức tiềm ẩn hoặc tình trạng kém hiệu quả cụ thể đối với các hãng hàng không này.
@@ -118,7 +100,7 @@ XI. Phân tích độ trễ trung bình theo hãng hàng không (Analysis of Mea
 
 
 
-XII. Phân tích Tổng số chuyến bay bị hủy và chuyến bay theo từng hãng hàng không (Analysis of Total Cancellations and Flights per Carrier):
+X. Phân tích Tổng số chuyến bay bị hủy và chuyến bay theo từng hãng hàng không (Analysis of Total Cancellations and Flights per Carrier):
 	Tổng số chuyến bay bị hủy theo từng hãng hàng không:
 		Delta Air Lines (DL) có tổng số chuyến bay bị hủy cao nhất, với 2.635 chuyến bay bị hủy trong giai đoạn quan sát. Điều này cho thấy sự gián đoạn đáng kể đối với hoạt động bay của Delta, có khả năng ảnh hưởng đến kế hoạch đi lại của hành khách và sự hài lòng chung của khách hàng.
 		United Airlines (UA) bám sát Delta, với 2.397 chuyến bay bị hủy. Số lượng chuyến bay bị hủy cao của UA cho thấy những thách thức hoặc vấn đề về hoạt động ảnh hưởng đến lịch trình chuyến bay của họ.
