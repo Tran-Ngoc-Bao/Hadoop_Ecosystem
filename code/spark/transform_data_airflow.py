@@ -3,15 +3,15 @@ from pyspark.sql.functions import *
 from sys import argv
 
 if __name__ == "__main__":
+    datawarehouse_location = 'hdfs://namenode:9000/processed_data'
+    spark = SparkSession.builder.appName("Transform data").config("spark.sql.warehouse.dir", datawarehouse_location).enableHiveSupport().getOrCreate()
+
     year = int(argv[1])
     month = int(argv[2])
 
     if (year == 2022 and month >= 8) or year > 2022:
         pass
     else:
-        datawarehouse_location = 'hdfs://namenode:9000/processed_data'
-        spark = SparkSession.builder.appName("Transform data").config("spark.sql.warehouse.dir", datawarehouse_location).enableHiveSupport().getOrCreate()
-        
         df = spark.read.parquet("hdfs://namenode:9000/staging/" + str(year) + "/" + str(month))
 
         # Select columns not too much null
@@ -86,4 +86,3 @@ if __name__ == "__main__":
             from temp_view
         """
         spark.sql(insert_into_sql)
-        
