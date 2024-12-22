@@ -56,32 +56,32 @@ kubectl create namespace hadoop-ecosystem & kubectl config set-context --current
 kubectl create -f ./kubernetes/flask
 ```
 
-#### 5.1 Deploy Kafka
+#### 5.2 Deploy Kafka
 ```sh
 helm install kafka ./kubernetes/kafka
 ```
 
-#### 5.2 Deploy Airflow
+#### 5.3 Deploy Airflow
 ```sh
 helm install airflow ./kubernetes/airflow
 ```
 
-#### 5.3 Deploy Hadoop
+#### 5.4 Deploy Hadoop
 ```sh
 helm install hadoop ./kubernetes/hadoop
 ```
 
-#### 5.4 Deploy Hive
+#### 5.5 Deploy Hive
 ```sh
 helm install hive-metastore ./kubernetes/hive-metastore
 ```
 
-#### 5.5 Deploy Trino
+#### 5.6 Deploy Trino
 ```sh
 helm install trino ./kubernetes/trino
 ```
 
-#### 5.6 Deploy Superset
+#### 5.7 Deploy Superset
 ```sh
 helm install superset ./kubernetes/superset
 ```
@@ -95,3 +95,4 @@ https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022/data?se
 ## Demo
 
 ## Report
+
