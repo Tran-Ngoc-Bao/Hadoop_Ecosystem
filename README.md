@@ -51,27 +51,37 @@ kubectl label node hadoop-ecosystem-m03 node-role.kubernetes.io/worker=worker & 
 kubectl create namespace hadoop-ecosystem & kubectl config set-context --current --namespace=hadoop-ecosystem
 ```
 
-#### 5.1 Deploy Airflow
+#### 5.1 Deploy Flask
+```sh
+kubectl create -f ./kubernetes/flask
+```
+
+#### 5.1 Deploy Kafka
+```sh
+helm install kafka ./kubernetes/kafka
+```
+
+#### 5.2 Deploy Airflow
 ```sh
 helm install airflow ./kubernetes/airflow
 ```
 
-#### 5.2 Deploy Hadoop
+#### 5.3 Deploy Hadoop
 ```sh
 helm install hadoop ./kubernetes/hadoop
 ```
 
-#### 5.3 Deploy Hive
+#### 5.4 Deploy Hive
 ```sh
 helm install hive-metastore ./kubernetes/hive-metastore
 ```
 
-#### 5.4 Deploy Trino
+#### 5.5 Deploy Trino
 ```sh
 helm install trino ./kubernetes/trino
 ```
 
-#### 5.5 Deploy Superset
+#### 5.6 Deploy Superset
 ```sh
 helm install superset ./kubernetes/superset
 ```
