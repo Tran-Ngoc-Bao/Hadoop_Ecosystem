@@ -73,6 +73,8 @@ spec:
           mountPath: /tmp/hadoop-config
         - name: dfs
           mountPath: /root/hdfs/datanode
+      nodeSelector:
+        role: worker
       volumes:
       - name: hadoop-config
         configMap:

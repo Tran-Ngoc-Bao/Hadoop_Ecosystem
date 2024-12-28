@@ -465,7 +465,8 @@ primary:
   ## Node labels for PostgreSQL primary pods assignment
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector:
+    role: worker
 
   ## Tolerations for PostgreSQL primary pods assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -559,7 +560,8 @@ readReplicas:
   ## Node labels for PostgreSQL read only  pods assignment
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
-  nodeSelector: {}
+  nodeSelector:
+    role: worker
 
   ## Tolerations for PostgreSQL read only  pods assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/

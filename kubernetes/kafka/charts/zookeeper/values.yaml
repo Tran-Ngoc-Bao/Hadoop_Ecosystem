@@ -439,7 +439,8 @@ affinity: {}
 ## @param nodeSelector Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/
 ##
-nodeSelector: {}
+nodeSelector:
+  role: worker
 ## @param tolerations Tolerations for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##

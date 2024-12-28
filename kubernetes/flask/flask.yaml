@@ -20,6 +20,8 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
+      nodeSelector:
+        role: worker
       volumes:
       - name: data-source
         persistentVolumeClaim:

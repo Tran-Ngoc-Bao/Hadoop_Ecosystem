@@ -566,7 +566,8 @@ coordinator:
 
   terminationGracePeriodSeconds: 30
 
-  nodeSelector: {}
+  nodeSelector:
+    role: worker
 
   tolerations: []
 
@@ -746,7 +747,8 @@ worker:
 
   terminationGracePeriodSeconds: 30
 
-  nodeSelector: {}
+  nodeSelector:
+    role: worker
 
   tolerations: []
 

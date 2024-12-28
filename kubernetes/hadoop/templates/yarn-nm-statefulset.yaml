@@ -90,6 +90,8 @@ spec:
         volumeMounts:
         - name: hadoop-config
           mountPath: /tmp/hadoop-config
+      nodeSelector:
+        role: worker
       volumes:
       - name: hadoop-config
         configMap:

@@ -46,6 +46,8 @@ spec:
         volumeMounts:
         - name: hive-config
           mountPath: /opt/hive/conf
+      nodeSelector:
+        role: worker
       volumes:
       - name: hive-config
         configMap:

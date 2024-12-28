@@ -61,20 +61,20 @@ yarn:
     pdbMinAvailable: 1
 
     # The number of YARN NodeManager instances.
-    replicas: 3
+    replicas: 2
 
     # Create statefulsets in parallel (K8S 1.7+)
-    parallelCreate: false
+    parallelCreate: true
 
     # CPU and memory resources allocated to each node manager pod.
     # This should be tuned to fit your workload.
     resources:
       requests:
-        memory: "2048Mi"
-        cpu: "1000m"
+        memory: "4096Mi"
+        cpu: "2000m"
       limits:
-        memory: "2048Mi"
-        cpu: "1000m"
+        memory: "4096Mi"
+        cpu: "2000m"
 
 persistence:
   nameNode:
