@@ -34,7 +34,7 @@ https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-deskt
 ### 4. Create a Kubernetes Cluster with Minikube
 #### 4.1 Create a Cluster
 ```sh
-minikube start --cpus 4 --memory 8192 --nodes 3 -p hadoop-ecosystem
+minikube start --nodes 3 -p hadoop-ecosystem
 ```
 
 #### 4.2 Label Nodes
