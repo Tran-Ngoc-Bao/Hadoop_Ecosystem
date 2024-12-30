@@ -160,7 +160,7 @@ if __name__ == "__main__":
         def stop_query():
             writing_df.stop()
 
-        timer = threading.Timer(10 * 60, stop_query)
+        timer = threading.Timer(60 * 60, stop_query)
         timer.start()
 
         writing_df.awaitTermination()
