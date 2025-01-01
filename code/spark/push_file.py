@@ -5,7 +5,7 @@ def solution():
     global month
 
     df = spark.read.option("header", "true").csv("/opt/airflow/source/flight_data/raw/Flights_" + str(year) + "_" + str(month) + ".csv")
-    df.write.mode("overwrite").parquet("hdfs://namenode:9000/staging/" + str(year) + "/" + str(month))
+    df.write.mode("overwrite").parquet("hdfs://hadoop-hadoop-hdfs-nn:9000/staging/" + str(year) + "/" + str(month))
 
     if month == 12:
         year += 1

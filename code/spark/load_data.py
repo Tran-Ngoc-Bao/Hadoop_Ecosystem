@@ -142,8 +142,8 @@ def solution():
     writing_df = json_expanded_df.writeStream \
         .format("parquet") \
         .option("format", "append") \
-        .option("path", "hdfs://namenode:9000/staging/" + str(year) + "/" + str(month)) \
-        .option("checkpointLocation", "hdfs://namenode:9000/tmp/" + str(year) + "/" + str(month)) \
+        .option("path", "hdfs://hadoop-hadoop-hdfs-nn:9000/staging/" + str(year) + "/" + str(month)) \
+        .option("checkpointLocation", "hdfs://hadoop-hadoop-hdfs-nn:9000/tmp/" + str(year) + "/" + str(month)) \
         .outputMode("append") \
         .start()
     

@@ -3,7 +3,7 @@ from pyspark.sql.functions import *
 from sys import argv
 
 if __name__ == "__main__":
-    datawarehouse_location = 'hdfs://namenode:9000/processed_data'
+    datawarehouse_location = 'hdfs://hadoop-hadoop-hdfs-nn:9000/processed_data'
     spark = SparkSession.builder.appName("Transform data").config("spark.sql.warehouse.dir", datawarehouse_location).enableHiveSupport().getOrCreate()
 
     year = int(argv[1])
@@ -12,7 +12,7 @@ if __name__ == "__main__":
     if (year == 2022 and month >= 8) or year > 2022:
         pass
     else:
-        df = spark.read.parquet("hdfs://namenode:9000/staging/" + str(year) + "/" + str(month))
+        df = spark.read.parquet("hdfs://hadoop-hadoop-hdfs-nn:9000/staging/" + str(year) + "/" + str(month))
 
         # Select columns not too much null
         df_select = df.select("Year", "Quarter", "Month", "DayofMonth", "DayOfWeek", "FlightDate",

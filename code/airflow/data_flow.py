@@ -25,7 +25,7 @@ year = 2030
 month = 1
 
 spark = SparkSession.builder.appName("Get time from HDFS").getOrCreate()
-df = spark.read.option("header", "true").csv("hdfs://namenode:9000/time")
+df = spark.read.option("header", "true").csv("hdfs://hadoop-hadoop-hdfs-nn:9000/time")
 time = df.first()
 year = int(time["year"])
 month = int(time["month"])
@@ -46,7 +46,7 @@ def increase_time_def():
         columns = ["year", "month"]
         data = [(year, month)]
         df = spark.createDataFrame(data, columns)
-        df.write.option("header", "true").mode("overwrite").csv("hdfs://namenode:9000/time")
+        df.write.option("header", "true").mode("overwrite").csv("hdfs://hadoop-hadoop-hdfs-nn:9000/time")
 
 def delivery_callback(err, msg):
     if err:
@@ -58,11 +58,11 @@ def extract_data_def():
     global year
     global month
 
-    config = {'bootstrap.servers': 'broker01:9093', 'acks': 'all'}
+    config = {'bootstrap.servers': 'kafka:9092', 'acks': 'all'}
     producer = Producer(config)
 
     topic = f'flight_data_{year}'
-    url = 'http://data-source:5000/api/get_data'
+    url = 'http://service:5000/api/get_data'
     params = {'year': year, 'month': month, 'offset': 0, 'limit': 100}
 
     while True:

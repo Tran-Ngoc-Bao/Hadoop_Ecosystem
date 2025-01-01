@@ -19,7 +19,7 @@ if __name__ == "__main__":
     else:
         df = spark.readStream \
             .format("kafka") \
-            .option("kafka.bootstrap.servers", "broker01:9093") \
+            .option("kafka.bootstrap.servers", "kafka:9092") \
             .option("subscribe", f"flight_data_{year}") \
             .load()
         
@@ -152,8 +152,8 @@ if __name__ == "__main__":
         writing_df = json_expanded_df.writeStream \
             .format("parquet") \
             .option("format", "append") \
-            .option("path", "hdfs://namenode:9000/staging/" + str(year) + "/" + str(month)) \
-            .option("checkpointLocation", "hdfs://namenode:9000/tmp/" + str(year) + "/" + str(month)) \
+            .option("path", "hdfs://hadoop-hadoop-hdfs-nn:9000/staging/" + str(year) + "/" + str(month)) \
+            .option("checkpointLocation", "hdfs://hadoop-hadoop-hdfs-nn:9000/tmp/" + str(year) + "/" + str(month)) \
             .outputMode("append") \
             .start()
         

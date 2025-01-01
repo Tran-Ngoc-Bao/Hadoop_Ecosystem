@@ -21,7 +21,7 @@ year = 2030
 month = 1
 
 spark = SparkSession.builder.appName("Get time from HDFS").getOrCreate()
-df = spark.read.option("header", "true").csv("hdfs://namenode:9000/time")
+df = spark.read.option("header", "true").csv("hdfs://hadoop-hadoop-hdfs-nn:9000/time")
 time = df.first()
 year = int(time["year"])
 month = int(time["month"])
@@ -42,7 +42,7 @@ def increase_time_def():
         columns = ["year", "month"]
         data = [(year, month)]
         df = spark.createDataFrame(data, columns)
-        df.repartition(1).write.option("header", "true").mode("overwrite").csv("hdfs://namenode:9000/time")
+        df.repartition(1).write.option("header", "true").mode("overwrite").csv("hdfs://hadoop-hadoop-hdfs-nn:9000/time")
 
 transform_data = BashOperator(
     task_id="transform_data",

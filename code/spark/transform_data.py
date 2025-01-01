@@ -5,7 +5,7 @@ def solution():
     global year
     global month
 
-    df = spark.read.parquet("hdfs://namenode:9000/staging/" + str(year) + "/" + str(month))
+    df = spark.read.parquet("hdfs://hadoop-hadoop-hdfs-nn:9000/staging/" + str(year) + "/" + str(month))
 
     # Select columns not too much null
     df_select = df.select("Year", "Quarter", "Month", "DayofMonth", "DayOfWeek", "FlightDate",
@@ -85,7 +85,7 @@ def solution():
         month += 1
 
 if __name__ == "__main__":
-    datawarehouse_location = 'hdfs://namenode:9000/processed_data'
+    datawarehouse_location = 'hdfs://hadoop-hadoop-hdfs-nn:9000/processed_data'
     spark = SparkSession.builder.appName("Transform data").config("spark.sql.warehouse.dir", datawarehouse_location).enableHiveSupport().getOrCreate()
     spark.sql("create schema if not exists processed_data")
     spark.sql("use processed_data")
