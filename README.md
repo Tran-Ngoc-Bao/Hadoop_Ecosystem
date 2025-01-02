@@ -13,7 +13,7 @@
 </ul>
 
 ## Data flow
-  <img src="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/pictures/system.png">
+  <img src="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/pictures/system/system.png">
 
 ## Deploy
 ### 1. Install Kubernetes
