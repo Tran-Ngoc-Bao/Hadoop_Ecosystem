@@ -11,7 +11,7 @@ import os
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "start_date": "2024-12-16 15:50:00",
+    "start_date": "2017-12-31 00:00:00",
     "email": ["airflow@airflow.com"],
     "email_on_failure": False,
     "email_on_retry": False,
@@ -19,7 +19,7 @@ default_args = {
     "retry_delay": timedelta(minutes=1),
 }
 
-dag = DAG("data_flow", default_args=default_args, schedule_interval="*/15 * * * *", max_active_runs=1)
+dag = DAG("data_flow", default_args=default_args, schedule_interval="0 0 1 * *", max_active_runs=1)
 
 year = 2030
 month = 1
@@ -94,37 +94,37 @@ def query_data_def():
     global month
 
     string = ''
-    with open('/opt/airflow/sql/trino/template/month.sql', 'r') as f:
+    with open('/opt/bitnami/airflow/code/trino/template/month.sql', 'r') as f:
         string = f.read()
 
     string_replace = string.replace('{year}', str(year)).replace('{month}', str(month))
-    with open(f'/opt/airflow/sql/trino/month/month_{year}_{month}.sql', 'w') as f:
+    with open(f'/opt/bitnami/airflow/code/trino/month/month_{year}_{month}.sql', 'w') as f:
         f.write(string_replace)
 
-    os.system(f'cd /opt/airflow/source && ./trino --server http://trino:8080 --file /opt/airflow/sql/trino/month/month_{year}_{month}.sql')
+    os.system(f'cd /opt/trino && ./trino --server http://trino:8080 --file /opt/bitnami/airflow/code/trino/month/month_{year}_{month}.sql')
 
     if month % 3 == 0:
         string = ''
-        with open('/opt/airflow/sql/trino/template/quarter.sql', 'r') as f:
+        with open('/opt/bitnami/airflow/code/trino/template/quarter.sql', 'r') as f:
             string = f.read()
 
         quarter = int(month / 3)
         string_replace = string.replace('{year}', str(year)).replace('{quarter}', str(quarter))
-        with open(f'/opt/airflow/sql/trino/quarter/quarter_{year}_{quarter}.sql', 'w') as f:
+        with open(f'/opt/bitnami/airflow/code/trino/quarter/quarter_{year}_{quarter}.sql', 'w') as f:
             f.write(string_replace)
         
-        os.system(f'cd /opt/airflow/source && ./trino --server http://trino:8080 --file /opt/airflow/sql/trino/quarter/quarter_{year}_{quarter}.sql')
+        os.system(f'cd /opt/trino && ./trino --server http://trino:8080 --file /opt/bitnami/airflow/code/trino/quarter/quarter_{year}_{quarter}.sql')
 
         if month % 12 == 0:
             string = ''
-            with open('/opt/airflow/sql/trino/template/year.sql', 'r') as f:
+            with open('/opt/bitnami/airflow/code/trino/template/year.sql', 'r') as f:
                 string = f.read()
 
             string_replace = string.replace('{year}', str(year))
-            with open(f'/opt/airflow/sql/trino/year/year_{year}.sql', 'w') as f:
+            with open(f'/opt/bitnami/airflow/code/trino/year/year_{year}.sql', 'w') as f:
                 f.write(string_replace)
             
-            os.system(f'cd /opt/airflow/source && ./trino --server http://trino:8080 --file /opt/airflow/sql/trino/year/year_{year}.sql')
+            os.system(f'cd /opt/trino && ./trino --server http://trino:8080 --file /opt/bitnami/airflow/code/trino/year/year_{year}.sql')
 
 extract_data = PythonOperator(
     task_id="extract_data",
@@ -134,13 +134,13 @@ extract_data = PythonOperator(
 
 load_data = BashOperator(
     task_id="load_data",
-    bash_command=f"source /opt/airflow/source/env.sh && spark-submit /opt/airflow/spark/load_data_airflow.py {year} {month}",
+    bash_command=f"source /opt/env.sh && spark-submit /opt/bitnami/airflow/code/spark/load_data_airflow.py {year} {month}",
     dag=dag
 )
 
 transform_data = BashOperator(
     task_id="transform_data",
-    bash_command=f"source /opt/airflow/source/env.sh && spark-submit /opt/airflow/spark/transform_data_airflow.py {year} {month}",
+    bash_command=f"source /opt/env.sh && spark-submit /opt/bitnami/airflow/code/spark/transform_data_airflow.py {year} {month}",
     dag=dag
 )
 

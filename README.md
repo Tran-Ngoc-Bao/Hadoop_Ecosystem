@@ -1,4 +1,4 @@
-# Data Lake with Hadoop Ecosystem
+# IT4997 - Graduation thesis - SOICT- HUST
 
 ## Introduction
 <ul>
@@ -12,7 +12,7 @@
   </li>
 </ul>
 
-## Data flow
+## System architecture
   <img src="https://github.com/Tran-Ngoc-Bao/Hadoop_Ecosystem/blob/master/pictures/system/system.png">
 
 ## Deploy
@@ -28,7 +28,12 @@ https://phoenixnap.com/kb/install-helm
 
 ### 3. Install WSL
 ```
-https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-desktop/
+https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-desktop
+```
+
+### 4. Install Lens
+```
+https://spacelift.io/blog/lens-kubernetes
 ```
 
 ### 4. Create a Kubernetes Cluster with Minikube
@@ -86,10 +91,20 @@ helm install trino ./kubernetes/trino
 helm install superset ./kubernetes/superset
 ```
 
-### 6. Use System
+### 6. Pre-use
 #### 6.1 Download Data source
 ```
 https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022/data?select=readme.md
+```
+
+#### 6.1 Move Data source to System
+```sh
+kubectl cp /path/to/datasource <pod-flask-1>:/data & kubectl cp /path/to/datasource <pod-flask-2>:/data
+```
+
+#### 6.2 Config Spark and Hadoop on Airflow
+```
+Read in readme.md in folder builded-airflow
 ```
 
 ## Demo

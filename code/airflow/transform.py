@@ -7,7 +7,7 @@ from pyspark.sql import SparkSession
 default_args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "start_date": "2024-11-28 13:30:00",
+    "start_date": "2017-12-31 00:00:00",
     "email": ["airflow@airflow.com"],
     "email_on_failure": False,
     "email_on_retry": False,
@@ -15,7 +15,7 @@ default_args = {
     "retry_delay": timedelta(minutes=1),
 }
 
-dag = DAG("transform", default_args=default_args, schedule_interval="*/2 * * * *", max_active_runs=1)
+dag = DAG("transform", default_args=default_args, schedule_interval="0 0 1 * *", max_active_runs=1)
 
 year = 2030
 month = 1
@@ -46,7 +46,7 @@ def increase_time_def():
 
 transform_data = BashOperator(
     task_id="transform_data",
-    bash_command=f"source /opt/airflow/source/env.sh && spark-submit /opt/airflow/spark/transform_data_airflow.py {year} {month}",
+    bash_command=f"source /opt/env.sh && spark-submit /opt/bitnami/airflow/code/spark/transform_data_airflow.py {year} {month}",
     dag=dag
 )
 
